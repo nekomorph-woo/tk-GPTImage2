@@ -23,10 +23,10 @@ node .claude/skills/image-research/scripts/collect.mjs
 
 ```bash
 node .claude/skills/image-research/scripts/collect.mjs \
-  --sources sources/gpt-image2-public-sources.json
+  --sources research/sources/gpt-image2-public-sources.json
 ```
 
-输出到 `studies/collections/<timestamp>-source-queue.md`。
+输出到 `research/studies/collections/<timestamp>-source-queue.md`。
 
 ### 列出提示词套路
 
@@ -54,7 +54,7 @@ node .claude/skills/image-research/scripts/doctor.mjs
 2. **逐个研究**：对队列中的每个来源，使用 WebSearch 或浏览器研究
 3. **拆解结构**：按分析维度拆解提示词（见下方框架）
 4. **提取 recipe**：只有结构明显可复用的才提取为 recipe
-5. **保存笔记**：写入 `studies/` 下，参考 `references/research-template.md` 格式
+5. **保存笔记**：写入 `research/studies/` 下，参考 `references/research-template.md` 格式
 6. **更新数据**：新 recipe 加入 `recipes/recipes.json`，新 prompt card 加入 `prompts/prompt-cards/`
 7. **验证**：运行 doctor 确认文件完整性
 
@@ -79,9 +79,9 @@ node .claude/skills/image-research/scripts/doctor.mjs
 
 | 路径 | 用途 |
 |------|------|
-| `sources/gpt-image2-public-sources.json` | 公开研究来源列表 |
-| `studies/` | 研究笔记和案例拆解 |
-| `studies/collections/` | collect 脚本生成的队列 |
+| `research/sources/gpt-image2-public-sources.json` | 公开研究来源列表 |
+| `research/studies/` | 研究笔记和案例拆解 |
+| `research/studies/collections/` | collect 脚本生成的队列 |
 | `recipes/recipes.json` | 提取的稳定风格套路 |
 | `prompts/prompt-cards/` | 可复用提示词卡片 |
 | `prompts/PROMPT_FRAMEWORK.md` | 标准提示词结构 |

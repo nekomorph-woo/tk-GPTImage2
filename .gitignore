@@ -1,4 +1,5 @@
 .env
 node_modules/
-outputs/
+gen/outputs/
 .DS_Store
+.claude/skills/collect-image-2-prompt/scripts/.ralph-baseline

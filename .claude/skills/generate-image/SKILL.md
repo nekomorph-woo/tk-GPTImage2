@@ -72,14 +72,14 @@ node .claude/skills/generate-image/scripts/generate.mjs \
 
 ```bash
 node .claude/skills/generate-image/scripts/batch.mjs \
-  --matrix experiments/starter.json
+  --matrix gen/experiments/starter.json
 ```
 
 ### 参考图编辑
 
 ```bash
 node .claude/skills/generate-image/scripts/edit.mjs \
-  --image inputs/refs/example.png \
+  --image gen/inputs/refs/example.png \
   --prompt "保留主体和构图，把光线改成高级编辑棚拍风格。" \
   --name edit-test
 ```
@@ -88,7 +88,7 @@ node .claude/skills/generate-image/scripts/edit.mjs \
 
 ```bash
 node .claude/skills/generate-image/scripts/edit.mjs \
-  --image inputs/refs/product.png,inputs/refs/material.png \
+  --image gen/inputs/refs/product.png,gen/inputs/refs/material.png \
   --prompt "保留第一张图的产品形状，使用第二张图的材质语言。"
 ```
 
@@ -98,7 +98,7 @@ node .claude/skills/generate-image/scripts/edit.mjs \
 
 ```bash
 node .claude/skills/generate-image/scripts/chatgpt-queue.mjs \
-  --matrix experiments/starter.json --name starter
+  --matrix gen/experiments/starter.json --name starter
 ```
 
 从提示词创建：
@@ -137,7 +137,7 @@ node .claude/skills/generate-image/scripts/chatgpt-import.mjs \
 |------|------|------|
 | `--matrix` | 是 | 实验矩阵 JSON 路径 |
 
-实验矩阵 JSON 格式参考 `experiments/starter.json` 和 `experiments/axis-lab.json`。
+实验矩阵 JSON 格式参考 `gen/experiments/starter.json` 和 `gen/experiments/axis-lab.json`。
 
 ### edit.mjs
 
@@ -193,15 +193,15 @@ node .claude/skills/generate-image/scripts/chatgpt-import.mjs \
 
 | 操作 | 输出位置 |
 |------|----------|
-| API 生成/编辑 | `outputs/<timestamp>-<name>/`（图片 + metadata.json） |
-| ChatGPT 队列 | `chatgpt-queue/<timestamp>-<name>.md` |
-| ChatGPT 导入 | `outputs/chatgpt/<timestamp>-<name>/`（图片 + metadata.json） |
+| API 生成/编辑 | `gen/outputs/<timestamp>-<name>/`（图片 + metadata.json） |
+| ChatGPT 队列 | `gen/chatgpt-queue/<timestamp>-<name>.md` |
+| ChatGPT 导入 | `gen/outputs/chatgpt/<timestamp>-<name>/`（图片 + metadata.json） |
 
 ## 约束
 
 1. **不要显示图片** — 只报告输出文件路径
 2. **提示词遵循框架** — 不要堆叠"masterpiece, ultra detailed"等模糊质量词
 3. **一次只改一个变量** — 批量实验的核心原则
-4. **参考图路径相对项目根目录** — 使用 `inputs/refs/...` 格式
+4. **参考图路径相对项目根目录** — 使用 `gen/inputs/refs/...` 格式
 5. **中文海报文字规则** — 精确中文标题放引号内，声明"不要额外随机文字"
 6. **编辑图保留说明** — 必须写清保留什么、改变什么、不动什么

@@ -2,59 +2,105 @@
 
 所有面向用户的说明、研究笔记、提示词手册、模板、评估记录使用**简体中文**编写。命令、文件名、参数名、模型名、环境变量名、JSON 键名和代码标识符保留英文。
 
-## 项目概述
-
-GPT Image 2 提示词研究与受控生图实验室。默认模型：`gpt-image-2`。
-
 ## 前置条件
 
 1. Node.js >= 20 已安装
 2. 项目根目录下已执行 `npm install`（安装 openai SDK）
 3. `.env` 已根据 `.env.example` 创建并设置 `OPENAI_API_KEY`
 
-## 项目地图
+## 技能总览
 
-| 目录/文件 | 用途 |
-|-----------|------|
-| `GPT_IMAGE2_GRIMOIRE.zh-CN.md` | 提示词魔导书（8 大流派、公式、诊断） |
-| `prompts/` | 提示词框架、约束、评分标准、可复用卡片 |
-| `prompts/prompt-cards/` | 5 张现成提示词卡片 |
-| `recipes/recipes.json` | 5 个稳定风格套路 |
-| `experiments/` | 批量实验矩阵 |
-| `inputs/` | 参考图和遮罩 |
-| `outputs/` | API 生成图片和 metadata |
-| `outputs/chatgpt/` | ChatGPT 手动导入图片 |
-| `chatgpt-queue/` | ChatGPT Plus 提示词队列 |
-| `studies/` | 研究笔记和案例拆解 |
-| `collected/` | 从外部收集的 prompt（X、论坛等） |
-| `sources/` | 公开研究来源列表 |
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    tk_GPTImage2                              │
+│                                                             │
+│  ┌───────────────┐  ┌───────────────┐  ┌────────────────┐   │
+│  │ /generate-    │  │ /image-       │  │ /collect-image │   │
+│  │ image         │  │ research      │  │ -2-prompt      │   │
+│  │               │  │               │  │                │   │
+│  │ gen/          │  │ research/     │  │ collected/     │   │
+│  └───────┬───────┘  └───────┬───────┘  └───────┬────────┘   │
+│          │                  │                  │            │
+│          └──────────┬───────┘                  │            │
+│                     │                          │            │
+│              ┌──────┴──────┐                   │            │
+│              │  共享资源    │                   │            │
+│              │ prompts/    │                   │            │
+│              │ recipes/    │                   │            │
+│              │ GRIMOIRE    │                   │            │
+│              └─────────────┘                   │            │
+└─────────────────────────────────────────────────────────────┘
+```
 
-## 可用技能
+## /generate-image — 生图助手
 
-### /generate-image
+单张生成、批量实验、参考图编辑、ChatGPT 队列模式、导入 ChatGPT 图片。
 
-生图助手：单张生成、批量实验、参考图编辑、ChatGPT 队列模式。
+**工作空间**：`gen/`
 
-### /image-research
+| 目录 | 用途 |
+|------|------|
+| `gen/experiments/` | 批量实验矩阵 JSON |
+| `gen/inputs/refs/` | 参考图 |
+| `gen/inputs/masks/` | 遮罩图 |
+| `gen/outputs/` | API 生成的图片和 metadata（按时间戳+名称分子目录） |
+| `gen/chatgpt-queue/` | ChatGPT Plus 提示词队列文件 |
 
-提示词研究：收集来源、创建笔记、列出套路、健康检查。
+**共享资源**（构造提示词时按优先级参考）：
 
-## 默认工作流
+1. `prompts/prompt-cards/` — 可复用提示词卡片
+2. `recipes/recipes.json` — 稳定风格套路
+3. `prompts/PROMPT_FRAMEWORK.md` — 标准提示词结构
+4. `prompts/NEGATIVE_CONSTRAINTS.md` — 失败规避短语
+5. `GPT_IMAGE2_GRIMOIRE.zh-CN.md` — 完整魔导书
 
-当用户请求改进实验室、研究提示词、收集案例或构建生图套路时：
+## /image-research — 提示词研究
 
-1. 先读取当前相关文件
-2. 优先更新持久化文件，不只在对话里回答
-3. 研究笔记保存到 `studies/`
-4. 可复用提示词保存到 `prompts/prompt-cards/`
-5. 稳定套路写入 `recipes/recipes.json`
-6. 长期经验更新 `GPT_IMAGE2_GRIMOIRE.zh-CN.md`
+收集公开研究来源、创建研究笔记队列、列出提示词套路、运行项目健康检查。
+
+**工作空间**：`research/`
+
+| 目录 | 用途 |
+|------|------|
+| `research/sources/` | 公开研究来源列表（JSON） |
+| `research/studies/` | 研究笔记和案例拆解 |
+| `research/studies/collections/` | collect 脚本生成的队列 |
+
+**共享资源**：
+
+- `prompts/REVIEW_RUBRIC.md` — 图片评分标准（7 维度 1-5 分）
+- `recipes/recipes.json` — 研究成果沉淀为稳定套路
+- `prompts/prompt-cards/` — 研究成果提取为可复用卡片
+
+**研究工作流**：收集来源 → 逐个研究 → 拆解结构 → 提取 recipe → 保存笔记 → 更新共享资源 → 运行 doctor 验证
+
+## /collect-image-2-prompt — 外部 Prompt 收集
+
+在 X 上搜索 GPT Image 2 的提示词并收集整理，支持 Ralph Loop 批量执行。
+
+**工作空间**：`collected/`
+
+| 目录 | 用途 |
+|------|------|
+| `collected/` | 从 X 等平台收集的结构化 prompt（按编号命名） |
+
+## 共享资源
+
+| 路径 | 用途 | 使用方 |
+|------|------|--------|
+| `prompts/PROMPT_FRAMEWORK.md` | 标准提示词结构 | generate-image, image-research |
+| `prompts/NEGATIVE_CONSTRAINTS.md` | 失败规避短语 | generate-image, image-research |
+| `prompts/REVIEW_RUBRIC.md` | 图片评分标准 | image-research |
+| `prompts/CHATGPT_MODE.md` | ChatGPT Plus 手动生图模式 | generate-image |
+| `prompts/prompt-cards/` | 可复用提示词卡片 | generate-image, image-research |
+| `recipes/recipes.json` | 稳定风格套路 | generate-image, image-research |
+| `GPT_IMAGE2_GRIMOIRE.zh-CN.md` | 完整提示词魔导书 | generate-image, image-research |
 
 ## 数据策略
 
 - 优先保存来源 URL、提示词结构和分析笔记，不默认下载大量公开图片
-- API 生成图片放到 `outputs/`
-- ChatGPT 手动生成图片放到 `outputs/chatgpt/`
+- API 生成图片放到 `gen/outputs/`
+- ChatGPT 手动生成图片放到 `gen/outputs/chatgpt/`
 - 不打印、不提交 API key。`.env` 是本地文件，已被忽略
 - 对第三方图片和提示词，提炼结构和规律，不长段逐字复制
 

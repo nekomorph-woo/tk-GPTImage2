@@ -72,7 +72,16 @@ bb-browser tab list
 }
 ```
 
-### 步骤 1: 搜索 X（仅首次执行）
+### 步骤 1: 搜索 X
+
+检查当前浏览器是否已在目标搜索页，避免重复搜索：
+
+```
+bb-browser eval "window.location.href" --tab <x-tab>
+```
+
+- 当前 URL 包含 `search?q=` 且搜索词匹配 `$QUERY` → 跳过本步骤，直接进入步骤 2
+- 不匹配 → 执行搜索：
 
 ```
 bb-browser open "https://x.com/search?q=$QUERY&src=typed_query&f=top" --tab <x-tab>

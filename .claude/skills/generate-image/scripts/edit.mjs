@@ -7,7 +7,7 @@ import { createClient, defaultImageOptions, writeImageResult } from "./lib/opena
 loadDotEnv();
 
 const args = parseArgs();
-const imagePath = requireArg(args, "image", "请提供 --image inputs/refs/example.png");
+const imagePath = requireArg(args, "image", "请提供 --image gen/inputs/refs/example.png");
 const prompt = readTextMaybeFile(args.prompt, args["prompt-file"]);
 
 if (!prompt) {

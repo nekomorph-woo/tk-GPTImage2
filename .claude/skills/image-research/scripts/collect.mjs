@@ -4,10 +4,10 @@ import { parseArgs } from "./lib/args.mjs";
 import { ensureDir, timestamp } from "./lib/env.mjs";
 
 const args = parseArgs();
-const sourceFile = args.sources || "sources/gpt-image2-public-sources.json";
+const sourceFile = args.sources || "research/sources/gpt-image2-public-sources.json";
 const sources = JSON.parse(fs.readFileSync(sourceFile, "utf8"));
 
-ensureDir("studies/collections");
+ensureDir("research/studies/collections");
 
 const lines = [
   "# GPT Image2 收集运行",
@@ -40,6 +40,6 @@ lines.push("- 哪些内容可以变成可复用 recipe？");
 lines.push("- 哪些风险需要规避或验证？");
 lines.push("");
 
-const output = path.join("studies/collections", `${timestamp()}-source-queue.md`);
+const output = path.join("research/studies/collections", `${timestamp()}-source-queue.md`);
 fs.writeFileSync(output, `${lines.join("\n")}\n`);
 console.log(output);

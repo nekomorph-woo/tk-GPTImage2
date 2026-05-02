@@ -6,7 +6,7 @@ import { createClient, defaultImageOptions, writeImageResult } from "./lib/opena
 loadDotEnv();
 
 const args = parseArgs();
-const matrixPath = requireArg(args, "matrix", "请提供 --matrix experiments/starter.json");
+const matrixPath = requireArg(args, "matrix", "请提供 --matrix gen/experiments/starter.json");
 const matrix = JSON.parse(fs.readFileSync(matrixPath, "utf8"));
 const client = createClient();
 
