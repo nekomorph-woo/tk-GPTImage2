@@ -34,17 +34,14 @@
 
 ## /generate-image — 生图助手
 
-单张生成、批量实验、参考图编辑、ChatGPT 队列模式、导入 ChatGPT 图片。
+单张生成、批量实验、Codex CLI 生图（无需 API Key，消耗 ChatGPT Plus 额度）。
 
 **工作空间**：`gen/`
 
 | 目录 | 用途 |
 |------|------|
-| `gen/experiments/` | 批量实验矩阵 JSON |
-| `gen/inputs/refs/` | 参考图 |
-| `gen/inputs/masks/` | 遮罩图 |
-| `gen/outputs/` | API 生成的图片和 metadata（按时间戳+名称分子目录） |
-| `gen/chatgpt-queue/` | ChatGPT Plus 提示词队列文件 |
+| `gen/experiments/` | 用户创建的实验矩阵 JSON（模板在 skill 的 references/ 下） |
+| `gen/outputs/` | API 和 Codex CLI 生成的图片和 metadata（按时间戳+名称分子目录） |
 
 **共享资源**（构造提示词时按优先级参考）：
 
@@ -91,7 +88,6 @@
 | `prompts/PROMPT_FRAMEWORK.md` | 标准提示词结构 | generate-image, image-research |
 | `prompts/NEGATIVE_CONSTRAINTS.md` | 失败规避短语 | generate-image, image-research |
 | `prompts/REVIEW_RUBRIC.md` | 图片评分标准 | image-research |
-| `prompts/CHATGPT_MODE.md` | ChatGPT Plus 手动生图模式 | generate-image |
 | `prompts/prompt-cards/` | 可复用提示词卡片 | generate-image, image-research |
 | `recipes/recipes.json` | 稳定风格套路 | generate-image, image-research |
 | `GPT_IMAGE2_GRIMOIRE.zh-CN.md` | 完整提示词魔导书 | generate-image, image-research |
@@ -100,7 +96,7 @@
 
 - 优先保存来源 URL、提示词结构和分析笔记，不默认下载大量公开图片
 - API 生成图片放到 `gen/outputs/`
-- ChatGPT 手动生成图片放到 `gen/outputs/chatgpt/`
+- Codex CLI 生成图片放到 `gen/outputs/`（metadata 中 `source: "codex-cli"`）
 - 不打印、不提交 API key。`.env` 是本地文件，已被忽略
 - 对第三方图片和提示词，提炼结构和规律，不长段逐字复制
 
