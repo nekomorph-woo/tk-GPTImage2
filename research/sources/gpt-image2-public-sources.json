@@ -35,13 +35,6 @@
     "notes": "用于研究可复用提示词模式和案例。"
   },
   {
-    "name": "GPT Image 2 Prompt Collection",
-    "url": "https://www.gpt-image-2.app/prompts",
-    "type": "提示词画廊",
-    "trust": "社区来源",
-    "notes": "用于观察社区图像转换案例。"
-  },
-  {
     "name": "image2prompts 画廊",
     "url": "https://image2prompts.net/",
     "type": "提示词画廊",
@@ -61,12 +54,5 @@
     "type": "博客指南",
     "trust": "二手来源",
     "notes": "用于观察提示词示例和测试类别。"
-  },
-  {
-    "name": "Reddit 热门提示词仓库讨论",
-    "url": "https://www.reddit.com/r/OpenAI/comments/1ssg7xp/i_put_all_the_viral_gpt_image_20_prompts_into_a/",
-    "type": "社区讨论",
-    "trust": "社区来源",
-    "notes": "用于了解社区对热门提示词仓库的讨论。"
   }
 ]

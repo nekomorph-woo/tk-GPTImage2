@@ -240,7 +240,7 @@
 4. 写一个干净公式。
 5. 生成 3-5 个变体。
 6. 记录哪个变量带来提升。
-7. 把稳定套路加入 `recipes/recipes.json` 和 `prompts/prompt-cards/`。
+7. 把稳定套路加入 `recipes/`。
 
 ## 10. 核心判断
 

@@ -1,21 +1,12 @@
 # 研究笔记
 
-这个文件夹用于拆解来自 X、文章、截图或个人收藏的图片案例。
+每次研究创建独立目录：`<date>-<topic>/`
 
-推荐笔记格式：
-
-```markdown
-# 研究：短名称
-
-来源：
-
-有效之处：
-
-视觉结构：
-
-可能的提示词成分：
-
-重建提示词：
-
-迭代笔记：
+```
+research/studies/
+├── <date>-<topic>/
+│   ├── collections/       ← 从信息源收集的 prompt、截图、笔记
+│   ├── report.md          ← 研究报告（分析结论、提取的 pattern）
+│   └── evaluation.json    ← 生图验证评分（如有）
+└── README.md
 ```
