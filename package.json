@@ -1,0 +1,13 @@
+{
+  "name": "tk-gpt-image2-lab",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "本地 GPT Image 2 提示词研究与生图实验室。",
+  "dependencies": {
+    "openai": "^6.8.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
