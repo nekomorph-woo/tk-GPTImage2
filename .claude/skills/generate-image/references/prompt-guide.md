@@ -4,12 +4,10 @@
 
 当用户没有提供完整提示词时，按以下顺序参考：
 
-1. `prompts/prompt-cards/` — 可复用提示词卡片
-2. `recipes/recipes.json` — 稳定风格套路
-3. `prompts/PROMPT_FRAMEWORK.md` — 标准提示词结构
-4. `prompts/NEGATIVE_CONSTRAINTS.md` — 失败规避短语
-5. `GPT_IMAGE2_GRIMOIRE.zh-CN.md` — 完整魔导书
-6. `references/prompt-recipes.md` — 提示词配方参考与诊断
+1. `recipes/` — 稳定风格套路（每个套路一个 .md 文件，draft 或 confirmed）
+2. `prompts/PROMPT_FRAMEWORK.md` — 标准提示词结构
+3. `prompts/NEGATIVE_CONSTRAINTS.md` — 失败规避短语
+4. `GPT_IMAGE2_GRIMOIRE.zh-CN.md` — 完整魔导书
 
 ## 核心公式
 
