@@ -30,62 +30,67 @@ export async function chatGenerate({ prompt, references = [], name, outDir = "ge
   const dir = path.resolve(outDir, runId);
   ensureDir(dir);
 
-  const written = [];
-  const imageSizes = [];
-  const totalStart = Date.now();
+  try {
+    const written = [];
+    const imageSizes = [];
+    const totalStart = Date.now();
 
-  for (let i = 0; i < n; i++) {
-    const genStart = Date.now();
+    for (let i = 0; i < n; i++) {
+      const genStart = Date.now();
 
-    const content = [];
+      const content = [];
+      for (const ref of references) {
+        const b64 = fs.readFileSync(ref).toString("base64");
+        content.push({ type: "image_url", image_url: { url: `data:image/png;base64,${b64}` } });
+      }
+      content.push({ type: "text", text: prompt });
+
+      const result = await client.chat.completions.create({
+        model: modelName,
+        messages: [{ role: "user", content }],
+        modalities: ["image", "text"],
+      });
+
+      const message = result.choices[0].message;
+      if (!message.images?.length) {
+        throw new Error(`第 ${i + 1} 张图片生成失败：响应中未包含图片`);
+      }
+
+      for (const [idx, img] of message.images.entries()) {
+        const dataUrl = img.image_url.url;
+        const b64 = dataUrl.includes(",") ? dataUrl.split(",")[1] : dataUrl;
+        const imagePath = path.join(dir, `${String(written.length + 1).padStart(2, "0")}.png`);
+        fs.writeFileSync(imagePath, Buffer.from(b64, "base64"));
+        written.push(path.resolve(imagePath));
+        imageSizes.push({ ...getImageDimensions(imagePath), generation_time_ms: Date.now() - genStart, generation_time: formatDuration(Date.now() - genStart) });
+      }
+    }
+
+    const copied = [];
     for (const ref of references) {
-      const b64 = fs.readFileSync(ref).toString("base64");
-      content.push({ type: "image_url", image_url: { url: `data:image/png;base64,${b64}` } });
-    }
-    content.push({ type: "text", text: prompt });
-
-    const result = await client.chat.completions.create({
-      model: modelName,
-      messages: [{ role: "user", content }],
-      modalities: ["image", "text"],
-    });
-
-    const message = result.choices[0].message;
-    if (!message.images?.length) {
-      throw new Error(`第 ${i + 1} 张图片生成失败：响应中未包含图片`);
+      const dest = path.join(dir, `ref-${path.basename(ref)}`);
+      fs.copyFileSync(ref, dest);
+      copied.push(dest);
     }
 
-    for (const [idx, img] of message.images.entries()) {
-      const dataUrl = img.image_url.url;
-      const b64 = dataUrl.includes(",") ? dataUrl.split(",")[1] : dataUrl;
-      const imagePath = path.join(dir, `${String(written.length + 1).padStart(2, "0")}.png`);
-      fs.writeFileSync(imagePath, Buffer.from(b64, "base64"));
-      written.push(path.resolve(imagePath));
-      imageSizes.push({ ...getImageDimensions(imagePath), generation_time_ms: Date.now() - genStart, generation_time: formatDuration(Date.now() - genStart) });
-    }
+    const metadata = {
+      source: "chat-completions",
+      prompt,
+      params: { model: modelName, n, modalities: ["image", "text"] },
+      generation_time_ms: Date.now() - totalStart,
+      generation_time: formatDuration(Date.now() - totalStart),
+      image_sizes: imageSizes,
+      written,
+      created_at: new Date().toISOString(),
+    };
+    if (copied.length) metadata.references = copied;
+    fs.writeFileSync(path.join(dir, "metadata.json"), JSON.stringify(metadata, null, 2));
+
+    return { dir, written };
+  } catch (err) {
+    if (fs.readdirSync(dir).length === 0) fs.rmSync(dir, { recursive: true });
+    throw err;
   }
-
-  const copied = [];
-  for (const ref of references) {
-    const dest = path.join(dir, `ref-${path.basename(ref)}`);
-    fs.copyFileSync(ref, dest);
-    copied.push(dest);
-  }
-
-  const metadata = {
-    source: "chat-completions",
-    prompt,
-    params: { model: modelName, n, modalities: ["image", "text"] },
-    generation_time_ms: Date.now() - totalStart,
-    generation_time: formatDuration(Date.now() - totalStart),
-    image_sizes: imageSizes,
-    written,
-    created_at: new Date().toISOString(),
-  };
-  if (copied.length) metadata.references = copied;
-  fs.writeFileSync(path.join(dir, "metadata.json"), JSON.stringify(metadata, null, 2));
-
-  return { dir, written };
 }
 
 // CLI 入口

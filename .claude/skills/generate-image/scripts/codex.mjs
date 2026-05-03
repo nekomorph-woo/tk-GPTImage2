@@ -58,63 +58,68 @@ export async function generate({ prompt, name, outDir = "gen/outputs", size, pro
   const dir = path.resolve(outDir, runId);
   ensureDir(dir);
 
-  const written = [];
-  const codexMeta = { version: codexVersion, original_path: null };
-  const imageSizes = [];
-  const totalStart = Date.now();
+  try {
+    const written = [];
+    const codexMeta = { version: codexVersion, original_path: null };
+    const imageSizes = [];
+    const totalStart = Date.now();
 
-  const refInstruction = references.length
-    ? `Reference images are provided as input. Use them for character/style consistency. `
-    : "";
+    const refInstruction = references.length
+      ? `Reference images are provided as input. Use them for character/style consistency. `
+      : "";
 
-  for (let i = 0; i < n; i++) {
-    if (n > 1) process.stderr.write(`正在生成 ${i + 1}/${n}...\n`);
+    for (let i = 0; i < n; i++) {
+      if (n > 1) process.stderr.write(`正在生成 ${i + 1}/${n}...\n`);
 
-    const genStart = Date.now();
-    const execEnv = proxy ? { ...process.env, HTTPS_PROXY: proxy, HTTP_PROXY: proxy } : undefined;
-    const imageSuffix = references.length ? ` ${references.map(r => `--image "${path.resolve(r)}"`).join(" ")}` : "";
-    execSync(
-      `codex exec -s workspace-write --skip-git-repo-check ${JSON.stringify(`${refInstruction}Use the image generation tool to create an image with this prompt:\n\n${prompt}`)}${imageSuffix}`,
-      { encoding: "utf8", timeout: 600_000, stdio: ["pipe", "pipe", "inherit"], env: execEnv }
-    );
+      const genStart = Date.now();
+      const execEnv = proxy ? { ...process.env, HTTPS_PROXY: proxy, HTTP_PROXY: proxy } : undefined;
+      const imageSuffix = references.length ? ` ${references.map(r => `--image "${path.resolve(r)}"`).join(" ")}` : "";
+      execSync(
+        `codex exec -s workspace-write --skip-git-repo-check ${JSON.stringify(`${refInstruction}Use the image generation tool to create an image with this prompt:\n\n${prompt}`)}${imageSuffix}`,
+        { encoding: "utf8", timeout: 600_000, stdio: ["pipe", "pipe", "inherit"], env: execEnv }
+      );
 
-    const savedPath = findNewestCodexImage(genStart);
-    if (!savedPath) {
-      throw new Error(`第 ${i + 1} 张图片生成失败：未在 ${generatedImagesDir} 中找到新生成的图片`);
+      const savedPath = findNewestCodexImage(genStart);
+      if (!savedPath) {
+        throw new Error(`第 ${i + 1} 张图片生成失败：未在 ${generatedImagesDir} 中找到新生成的图片`);
+      }
+
+      const outputPath = path.join(dir, `${String(i + 1).padStart(2, "0")}.png`);
+      fs.copyFileSync(savedPath, outputPath);
+      codexMeta.original_path = savedPath;
+
+      const dims = getImageDimensions(outputPath);
+      imageSizes.push({ ...dims, generation_time_ms: Date.now() - genStart, generation_time: formatDuration(Date.now() - genStart) });
+
+      written.push(path.resolve(outputPath));
     }
 
-    const outputPath = path.join(dir, `${String(i + 1).padStart(2, "0")}.png`);
-    fs.copyFileSync(savedPath, outputPath);
-    codexMeta.original_path = savedPath;
+    const copied = [];
+    for (const ref of references) {
+      const dest = path.join(dir, `ref-${path.basename(ref)}`);
+      fs.copyFileSync(ref, dest);
+      copied.push(dest);
+    }
 
-    const dims = getImageDimensions(outputPath);
-    imageSizes.push({ ...dims, generation_time_ms: Date.now() - genStart, generation_time: formatDuration(Date.now() - genStart) });
+    const metadata = {
+      source: "codex-cli",
+      prompt,
+      params: { n },
+      codex: codexMeta,
+      image_sizes: imageSizes,
+      total_generation_time_ms: Date.now() - totalStart,
+      total_generation_time: formatDuration(Date.now() - totalStart),
+      written,
+      created_at: new Date().toISOString()
+    };
+    if (copied.length) metadata.references = copied;
+    fs.writeFileSync(path.join(dir, "metadata.json"), JSON.stringify(metadata, null, 2));
 
-    written.push(path.resolve(outputPath));
+    return { dir, written };
+  } catch (err) {
+    if (fs.readdirSync(dir).length === 0) fs.rmSync(dir, { recursive: true });
+    throw err;
   }
-
-  const copied = [];
-  for (const ref of references) {
-    const dest = path.join(dir, `ref-${path.basename(ref)}`);
-    fs.copyFileSync(ref, dest);
-    copied.push(dest);
-  }
-
-  const metadata = {
-    source: "codex-cli",
-    prompt,
-    params: { n },
-    codex: codexMeta,
-    image_sizes: imageSizes,
-    total_generation_time_ms: Date.now() - totalStart,
-    total_generation_time: formatDuration(Date.now() - totalStart),
-    written,
-    created_at: new Date().toISOString()
-  };
-  if (copied.length) metadata.references = copied;
-  fs.writeFileSync(path.join(dir, "metadata.json"), JSON.stringify(metadata, null, 2));
-
-  return { dir, written };
 }
 
 // CLI 入口

@@ -54,28 +54,33 @@ export async function writeImageResult({ result, prompt, params, name, outDir = 
   const dir = path.join(outDir, runId);
   ensureDir(dir);
 
-  const written = [];
-  const imageSizes = [];
-  for (const [index, item] of result.data.entries()) {
-    if (!item.b64_json) continue;
-    const imagePath = path.join(dir, `${String(index + 1).padStart(2, "0")}.png`);
-    fs.writeFileSync(imagePath, Buffer.from(item.b64_json, "base64"));
-    written.push(imagePath);
-    imageSizes.push(getImageDimensions(imagePath));
+  try {
+    const written = [];
+    const imageSizes = [];
+    for (const [index, item] of result.data.entries()) {
+      if (!item.b64_json) continue;
+      const imagePath = path.join(dir, `${String(index + 1).padStart(2, "0")}.png`);
+      fs.writeFileSync(imagePath, Buffer.from(item.b64_json, "base64"));
+      written.push(imagePath);
+      imageSizes.push(getImageDimensions(imagePath));
+    }
+
+    const copied = [];
+    for (const ref of references) {
+      const dest = path.join(dir, `ref-${path.basename(ref)}`);
+      fs.copyFileSync(ref, dest);
+      copied.push(dest);
+    }
+
+    const metadata = { prompt, params, generation_time_ms, generation_time: formatDuration(generation_time_ms), image_sizes: imageSizes, written, created_at: new Date().toISOString() };
+    if (copied.length) metadata.references = copied;
+    fs.writeFileSync(path.join(dir, "metadata.json"), JSON.stringify(metadata, null, 2));
+
+    return { dir, written };
+  } catch (err) {
+    if (fs.readdirSync(dir).length === 0) fs.rmSync(dir, { recursive: true });
+    throw err;
   }
-
-  const copied = [];
-  for (const ref of references) {
-    const dest = path.join(dir, `ref-${path.basename(ref)}`);
-    fs.copyFileSync(ref, dest);
-    copied.push(dest);
-  }
-
-  const metadata = { prompt, params, generation_time_ms, generation_time: formatDuration(generation_time_ms), image_sizes: imageSizes, written, created_at: new Date().toISOString() };
-  if (copied.length) metadata.references = copied;
-  fs.writeFileSync(path.join(dir, "metadata.json"), JSON.stringify(metadata, null, 2));
-
-  return { dir, written };
 }
 
 export function editOptions({ prompt, references, model, quality, format, compression } = {}) {
