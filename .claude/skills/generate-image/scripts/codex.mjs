@@ -120,7 +120,7 @@ export async function generate({ prompt, name, outDir = "gen/outputs", size, pro
 // CLI 入口
 loadDotEnv();
 const { parseArgs } = await import("./lib/args.mjs");
-const { readTextMaybeFile } = await import("./lib/env.mjs");
+const { readTextMaybeFile, resolveReferences } = await import("./lib/env.mjs");
 const args = parseArgs();
 const prompt = readTextMaybeFile(args.prompt, args["prompt-file"]);
 
@@ -128,6 +128,7 @@ if (prompt) {
   let references = [];
   if (args.reference) {
     references = Array.isArray(args.reference) ? args.reference : [args.reference];
+    references = await resolveReferences(references);
   }
 
   const saved = await generate({

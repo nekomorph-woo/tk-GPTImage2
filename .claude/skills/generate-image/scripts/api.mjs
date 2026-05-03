@@ -90,7 +90,7 @@ export async function chatGenerate({ prompt, references = [], name, outDir = "ge
 
 // CLI 入口
 const { parseArgs } = await import("./lib/args.mjs");
-const { readTextMaybeFile } = await import("./lib/env.mjs");
+const { readTextMaybeFile, resolveReferences } = await import("./lib/env.mjs");
 const args = parseArgs();
 const prompt = readTextMaybeFile(args.prompt, args["prompt-file"]);
 
@@ -102,18 +102,14 @@ if (prompt) {
     let references = [];
     if (args.reference) {
       references = Array.isArray(args.reference) ? args.reference : [args.reference];
-      for (const ref of references) {
-        if (!fs.existsSync(ref)) throw new Error(`参考图不存在: ${ref}`);
-      }
+      references = await resolveReferences(references);
     }
     const saved = await chatGenerate({ prompt, references, name: args.name, model: args.model, n: Number(args.n || 1) });
     console.log(JSON.stringify(saved, null, 2));
   } else if (isEdit) {
     if (!args.reference) throw new Error("edit 模式需要 --reference 参数指定参考图路径");
-    const references = Array.isArray(args.reference) ? args.reference : [args.reference];
-    for (const ref of references) {
-      if (!fs.existsSync(ref)) throw new Error(`参考图不存在: ${ref}`);
-    }
+    let references = Array.isArray(args.reference) ? args.reference : [args.reference];
+    references = await resolveReferences(references);
     const saved = await edit({ prompt, references, name: args.name, quality: args.quality, format: args.format, compression: args.compression, n: Number(args.n || 1) });
     console.log(JSON.stringify(saved, null, 2));
   } else {
