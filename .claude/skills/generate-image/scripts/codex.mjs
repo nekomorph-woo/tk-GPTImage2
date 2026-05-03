@@ -133,7 +133,7 @@ if (prompt) {
   const saved = await generate({
     prompt,
     name: args.name,
-    proxy: args.proxy || process.env.CODEX_PROXY || undefined,
+    proxy: references.length ? undefined : (args.proxy || process.env.CODEX_PROXY || undefined),
     n: Number(args.n || 1),
     references
   });

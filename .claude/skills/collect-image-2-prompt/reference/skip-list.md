@@ -40,3 +40,7 @@
 - https://x.com/BuescherScott/status/2050814009998270825 | R4 | 2026-05-03
 - https://x.com/grok/status/2050815192976490566 | R4 | 2026-05-03
 - https://x.com/riomadeit/status/2046682439985082441 | R4 | 2026-05-03
+- https://x.com/promptsref/status/2047187781064245394 | R3 | 2026-05-04
+- https://x.com/chongdashu/status/2031474716704436484 | R4 | 2026-05-04
+- https://x.com/Just_sharon7/status/2049804282854338750 | R4 | 2026-05-04
+- https://x.com/Shinning1010/status/2050101042956689441 | R4 | 2026-05-04

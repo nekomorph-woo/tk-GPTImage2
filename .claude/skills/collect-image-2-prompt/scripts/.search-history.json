@@ -24,5 +24,83 @@
     "skipped": 12,
     "overlap_with_previous": 1.0,
     "hours_since_previous": 8.5
+  },
+  {
+    "id": "20260504-001",
+    "search_term": "gpt-image-2 pixel art indie game character",
+    "sort_mode": "top",
+    "target_count": 10,
+    "per_round_count": 1,
+    "start_time": "2026-05-03T16:40:45.596763+00:00",
+    "end_time": "2026-05-03T16:46:55.726532+00:00",
+    "collected": 3,
+    "skipped": 2,
+    "overlap_with_previous": 0.33,
+    "hours_since_previous": 11.2
+  },
+  {
+    "id": "20260504-002",
+    "search_term": "gpt-image-2 pixel art indie game character",
+    "sort_mode": "live",
+    "target_count": 10,
+    "per_round_count": 1,
+    "start_time": "2026-05-03T16:47:05.402469+00:00",
+    "end_time": null,
+    "collected": 0,
+    "skipped": 0,
+    "overlap_with_previous": 1.0,
+    "hours_since_previous": 0.1
+  },
+  {
+    "id": "20260504-003",
+    "search_term": "gpt-image-2 game character",
+    "sort_mode": "top",
+    "target_count": 7,
+    "per_round_count": 1,
+    "start_time": "2026-05-03T16:47:31.245916+00:00",
+    "end_time": "2026-05-03T16:52:44.883596+00:00",
+    "collected": 2,
+    "skipped": 3,
+    "overlap_with_previous": 0.62,
+    "hours_since_previous": 0.1
+  },
+  {
+    "id": "20260504-004",
+    "search_term": "gpt-image-2 character design",
+    "sort_mode": "top",
+    "target_count": 5,
+    "per_round_count": 1,
+    "start_time": "2026-05-03T16:52:47.957353+00:00",
+    "end_time": "2026-05-03T16:55:18.029426+00:00",
+    "collected": 2,
+    "skipped": 1,
+    "overlap_with_previous": 0.67,
+    "hours_since_previous": 0.1
+  },
+  {
+    "id": "20260504-005",
+    "search_term": "gpt-image-2 prompt",
+    "sort_mode": "top",
+    "target_count": 3,
+    "per_round_count": 1,
+    "start_time": "2026-05-03T16:55:22.085459+00:00",
+    "end_time": "2026-05-03T16:56:21.490000+00:00",
+    "collected": 0,
+    "skipped": 0,
+    "overlap_with_previous": 1.0,
+    "hours_since_previous": 11.4
+  },
+  {
+    "id": "20260504-006",
+    "search_term": "gpt-image-2 prompt",
+    "sort_mode": "top",
+    "target_count": 3,
+    "per_round_count": 1,
+    "start_time": "2026-05-03T16:56:51.278931+00:00",
+    "end_time": null,
+    "collected": 0,
+    "skipped": 0,
+    "overlap_with_previous": 1.0,
+    "hours_since_previous": 0.0
   }
 ]
