@@ -1,0 +1,28 @@
+[
+  {
+    "id": "20260503-001",
+    "search_term": "gpt-image-2 prompt",
+    "sort_mode": "top",
+    "target_count": 50,
+    "per_round_count": 1,
+    "start_time": "2026-05-02T21:00:00+00:00",
+    "end_time": "2026-05-02T21:22:00+00:00",
+    "collected": 53,
+    "skipped": 18,
+    "overlap_with_previous": 0.0,
+    "hours_since_previous": null
+  },
+  {
+    "id": "20260503-002",
+    "search_term": "gpt-image-2 prompt",
+    "sort_mode": "top",
+    "target_count": 20,
+    "per_round_count": 1,
+    "start_time": "2026-05-03T05:30:00+00:00",
+    "end_time": "2026-05-03T05:55:00+00:00",
+    "collected": 14,
+    "skipped": 12,
+    "overlap_with_previous": 1.0,
+    "hours_since_previous": 8.5
+  }
+]

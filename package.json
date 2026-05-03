@@ -5,7 +5,7 @@
   "type": "module",
   "description": "本地 GPT Image 2 提示词研究与生图实验室。",
   "dependencies": {
-    "openai": "^6.8.1"
+    "openai": "^6.35.0"
   },
   "engines": {
     "node": ">=20"
