@@ -48,6 +48,7 @@ bb-browser tab list
 
 ## 通用脚本
 
+- [scripts/human-delay.sh](scripts/human-delay.sh) — 拟人化随机延迟，替代固定 `sleep`
 - [scripts/smart-scroll.js](scripts/smart-scroll.js) — 根据页面元素高度动态计算滚动距离（800px 上限）
 - [scripts/emergency-scroll.js](scripts/emergency-scroll.js) — 紧急大距离滚动（3000px），连续跳过 8 次时触发
 - [scripts/cleanup-overlays.sh](scripts/cleanup-overlays.sh) — 清理 snapshot 产生的覆盖层和 ref 数字标签
@@ -67,6 +68,66 @@ bb-browser tab list
   - `start --term ... --sort ... --target ... --per-round ...` — 记录开始，`end --id ... --collected ... --skipped ...` — 记录结束，`query` — 查询历史
 - [reference/judgment-rules.md](reference/judgment-rules.md) — 步骤 3.4 语义判断规则，发现新规则时自动追加
 - [reference/skip-list.md](reference/skip-list.md) — 已跳过推文名单，R3/R4 触发时自动追加
+
+## 行为拟人化
+
+所有浏览器操作必须遵循以下拟人化规则，避免固定节奏暴露自动化特征。
+
+### 随机延迟
+
+用 `human-delay.sh` 替代所有固定 `sleep`。脚本位于 [scripts/human-delay.sh](scripts/human-delay.sh)，接受 min/max 秒参数，默认 1-3 秒：
+
+```
+bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 1 3
+```
+
+| 场景 | min | max |
+|------|-----|-----|
+| 滚动后等待加载 | 1 | 3 |
+| 点击后等待导航 | 2 | 4 |
+| Show more 展开后 | 1 | 2 |
+
+### 阅读模拟
+
+进入详情页后、提取内容前，必须插入 2-5 秒随机停顿，模拟人类阅读推文的时间：
+
+```
+bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 2 5
+```
+
+### 间歇空闲
+
+每成功收集 3 条后，插入一次较长停顿（5-10 秒），模拟人类休息。用 `runtime-state.py collect` 的返回值判断计数：
+
+```
+# collect 返回 {"total_collected": N, ...}
+# 当 N % 3 == 0 时执行间歇空闲
+bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 5 10
+```
+
+### 探索性滚动
+
+在关键决策点插入随机微小滚动，模拟人类浏览时的犹豫和扫视：
+
+**列表页**（步骤 2 点击推文前）：约 30% 概率执行一次随机方向的小幅滚动（100-300px）：
+
+```
+bb-browser eval "window.scrollBy({top: (Math.random() > 0.5 ? 1 : -1) * (100 + Math.floor(Math.random() * 200)), behavior: 'smooth'})" --tab <x-tab>
+```
+
+**详情页**（步骤 3.1 进入后、阅读模拟前）：向下滚动 200-500px 模拟先浏览一遍，再滚回顶部开始提取：
+
+```
+bb-browser eval "const d = 200 + Math.floor(Math.random() * 300); window.scrollBy({top: d, behavior: 'smooth'}); 'scrolled ' + d" --tab <x-tab>
+bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 1 2
+bb-browser eval "window.scrollTo({top: 0, behavior: 'smooth'})" --tab <x-tab>
+```
+
+**返回后**（步骤 7 back 后）：约 40% 概率向上滚动 200-500px 再继续，模拟重新定位：
+
+```
+bb-browser eval "window.scrollBy({top: -(200 + Math.floor(Math.random() * 300)), behavior: 'smooth'})" --tab <x-tab>
+```
 
 ## 工作流程
 
@@ -126,11 +187,11 @@ bb-browser open "https://x.com/search?q=$QUERY&src=typed_query&f=$SORT_MODE" --t
 
 ```
 bb-browser eval "$(cat .claude/skills/collect-image-2-prompt/scripts/smart-scroll.js)" --tab <x-tab>
-sleep 2
+bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 1 3
 bb-browser eval "document.querySelectorAll('[data-testid=\"tweetText\"]').length" --tab <x-tab>
 ```
 
-当一条新的推文完整出现在视窗中时，进入步骤 3。
+当一条新的推文完整出现在视窗中时，进入步骤 3。点击前执行探索性滚动（约 30% 概率小幅随机滚动）。
 
 **紧急滚动**：如果上一轮是跳过（连续跳过 >= 8 次），先执行紧急滚动刷新内容：
 
@@ -145,7 +206,7 @@ if [ "$SHOULD_SCROLL" = "True" ]; then
 
   # 执行紧急滚动
   bb-browser eval "$(cat .claude/skills/collect-image-2-prompt/scripts/emergency-scroll.js)" --tab <x-tab>
-  sleep 3
+  bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 2 4
 
   # 检查 article 数量变化
   AFTER=$(bb-browser eval "document.querySelectorAll('article').length" --tab <x-tab>)
@@ -158,7 +219,7 @@ if [ "$SHOULD_SCROLL" = "True" ]; then
     if [ "$SWITCH" = "True" ]; then
       # 连续 3 次紧急滚动无效且当前不是 top → 切换到 top
       bb-browser open "https://x.com/search?q=$QUERY&src=typed_query&f=top" --tab <x-tab>
-      sleep 3
+      bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 2 4
       # 重置失败计数
       python3 .claude/skills/collect-image-2-prompt/scripts/runtime-state.py emergency_success
     fi
@@ -181,6 +242,10 @@ bb-browser eval "document.querySelectorAll('[data-testid=\"tweetText\"]')[N].dis
 ```
 
 验证已进入详情页（URL 格式为 `x.com/<username>/status/<id>`）。
+
+执行探索性滚动 + 阅读模拟（详情页行为拟人化）：
+1. 向下滚动 200-500px，等待 1-2s，再滚回顶部
+2. 等待 2-5 秒（阅读模拟）
 
 #### 3.1a 快速跳过检查
 
@@ -216,7 +281,7 @@ bb-browser eval "const btn = document.querySelector('button[data-testid=\"tweet-
 
 ```
 bb-browser eval "$(cat .claude/skills/collect-image-2-prompt/scripts/smart-scroll.js)" --tab <x-tab>
-sleep 2
+bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 1 3
 ```
 
 重复滚动直到 JS 检测到 "Post your reply" 出现在页面中：
@@ -249,7 +314,7 @@ bb-browser eval "document.querySelector('[data-testid=\"User-Name\"]')?.textCont
 
 # 滚动到评论区
 bb-browser eval "window.scrollBy({top: 600, behavior: 'smooth'})" --tab <x-tab>
-sleep 2
+bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 1 2
 ```
 
 获取前 5 条评论及作者，筛选博主本人的评论：
@@ -326,17 +391,26 @@ bb-browser eval "
 成功写入文件后，记录收集：
 
 ```
-python3 .claude/skills/collect-image-2-prompt/scripts/runtime-state.py collect
+COLLECT_RESULT=$(python3 .claude/skills/collect-image-2-prompt/scripts/runtime-state.py collect)
+TOTAL=$(echo "$COLLECT_RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('total_collected', 0))")
+```
+
+间歇空闲检查（每成功收集 3 条执行一次 5-10 秒停顿）：
+
+```
+if [ $((TOTAL % 3)) -eq 0 ]; then
+  bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 5 10
+fi
 ```
 
 ### 步骤 7: 返回搜索列表
 
 ```
 bb-browser back --tab <x-tab>
-sleep 2
+bash .claude/skills/collect-image-2-prompt/scripts/human-delay.sh 2 4
 ```
 
-验证 URL 已回到搜索页 (`x.com/search?...`)。
+验证 URL 已回到搜索页 (`x.com/search?...`)。返回后约 40% 概率向上滚动 200-500px（探索性滚动，模拟重新定位）。
 
 ### 步骤 8: 循环结束清理
 
@@ -357,7 +431,12 @@ python3 .claude/skills/collect-image-2-prompt/scripts/runtime-state.py cleanup
 
 - [ ] 前置检查已执行（搜索词已提取，x.com tab 存在）
 - [ ] 步骤 0 已执行（搜索历史已记录，运行时状态已初始化，RAW_QUERY 已保存）
-- [ ] 每次收集循环：快速跳过检查（已收集 + 跳过名单 + runtime-state skip）→ 紧急滚动检查 → 提取完整内容（含评论区）→ 去重检查 → 获取图片样例 → 结构化记录（+ runtime-state collect）→ 成功返回列表
+- [ ] 行为拟人化：所有 `sleep` 已替换为 `human-delay.sh` 随机延迟
+- [ ] 行为拟人化：详情页进入后执行探索性滚动 + 阅读模拟（2-5s）
+- [ ] 行为拟人化：列表页点击前约 30% 概率执行探索性微滚
+- [ ] 行为拟人化：返回列表后约 40% 概率执行探索性微滚
+- [ ] 行为拟人化：每收集 3 条执行间歇空闲（5-10s）
+- [ ] 每次收集循环：快速跳过检查（已收集 + 跳过名单 + runtime-state skip）→ 紧急滚动检查 → 提取完整内容（含评论区）→ 去重检查 → 获取图片样例 → 结构化记录（+ runtime-state collect + 间歇空闲检查）→ 成功返回列表
 - [ ] R3/R4 跳过的推文已追加到 `reference/skip-list.md`
 - [ ] 每轮收集循环结束前，已将提取到的 prompt 结构化保存到 `collected/` 目录（含用途和标签）
 - [ ] 主推文正文是引导文案时，已滚动评论区提取博主评论中的 prompt
