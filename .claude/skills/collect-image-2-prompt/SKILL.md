@@ -20,9 +20,11 @@ description: 在 X 上搜索 GPT Image 2 的提示词并收集整理。Use when 
 RESULT=$(bash .claude/skills/collect-image-2-prompt/scripts/extract-input-params.sh "<用户输入内容>")
 QUERY=$(echo "$RESULT" | cut -d'|' -f1)
 COUNT=$(echo "$RESULT" | cut -d'|' -f2)
+SORT_MODE=$(echo "$RESULT" | cut -d'|' -f3)
+SORT_MODE=${SORT_MODE:-top}
 ```
 
-输出格式：`<URL编码搜索词>|<数量>`，数量未提供时默认为 5。
+输出格式：`<URL编码搜索词>|<数量>|<排序模式>`，数量默认 5，排序模式默认 `top`（可选 `live`）。
 
 **如果 `$QUERY` 为空，立即终止执行并输出：**
 
@@ -31,8 +33,9 @@ COUNT=$(echo "$RESULT" | cut -d'|' -f2)
 > `本次执行搜索词：{你要搜索的内容}`
 >
 > 可选附加数量：`本次执行数量：{数量}`（默认 5）
+> 可选附加排序：`本次执行排序：{top|live}`（默认 top）
 >
-> 示例：`/collect-image-2-prompt 本次执行搜索词：gpt-image-2 prompt JSON 本次执行数量：3`
+> 示例：`/collect-image-2-prompt 本次执行搜索词：gpt-image-2 prompt JSON 本次执行数量：3 本次执行排序：live`
 
 #### 2. 检查浏览器标签页
 
@@ -84,7 +87,7 @@ bb-browser eval "window.location.href" --tab <x-tab>
 - 不匹配 → 执行搜索：
 
 ```
-bb-browser open "https://x.com/search?q=$QUERY&src=typed_query&f=top" --tab <x-tab>
+bb-browser open "https://x.com/search?q=$QUERY&src=typed_query&f=$SORT_MODE" --tab <x-tab>
 ```
 
 ### 步骤 2: 智能滚动，定位一条完整推文
@@ -249,6 +252,7 @@ bb-browser eval "
 按 [reference/prompt-template.md](reference/prompt-template.md) 模板，将提取到的 prompt 保存到 `collected/` 目录。使用 Write 工具写入文件。
 
 填写规则：
+- **搜索词**：填入 `$RAW_QUERY`（原始未编码的搜索词，在 extract-input-params 前保存）
 - **用途**：根据 prompt 内容和图片样例，一句话概括该 prompt 生成什么效果的图片（≤150字）
 - **标签**：提取 prompt 涉及的风格、技术、场景等关键词，逗号分隔（如 `cinematic, mirror-selfie, phone-photography`）
 

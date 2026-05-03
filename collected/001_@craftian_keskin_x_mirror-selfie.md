@@ -3,6 +3,7 @@
 - **来源**: [@craftian_keskin](https://x.com/craftian_keskin/status/2047046373401301055)
 - **采集时间**: 2026-05-02
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

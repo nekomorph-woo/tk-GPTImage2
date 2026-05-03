@@ -3,6 +3,7 @@
 - **来源**: [@AIwithSynthia](https://x.com/AIwithSynthia/status/2050430705189191704)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

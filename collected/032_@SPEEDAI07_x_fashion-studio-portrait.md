@@ -3,6 +3,7 @@
 - **来源**: [@SPEEDAI07](https://x.com/SPEEDAI07/status/2050412567504572566)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

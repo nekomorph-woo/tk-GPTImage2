@@ -3,6 +3,7 @@
 - **来源**: [@meng_dagg695](https://x.com/meng_dagg695/status/2050472802327900342)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

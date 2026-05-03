@@ -35,3 +35,8 @@
 - https://x.com/ShamsAmin56/status/2050281206139461780 | R4 | 2026-05-03
 - https://x.com/Oluwaphilemon1/status/2048986035225309372 | R4 | 2026-05-03
 - https://x.com/R2Cdev_/status/2049814356490338591 | R4 | 2026-05-03
+- https://x.com/hayyantechtalks/status/2050798334563012859 | R4 | 2026-05-03
+- https://x.com/aiistudiocom/status/2050788501604692189 | R3 | 2026-05-03
+- https://x.com/BuescherScott/status/2050814009998270825 | R4 | 2026-05-03
+- https://x.com/grok/status/2050815192976490566 | R4 | 2026-05-03
+- https://x.com/riomadeit/status/2046682439985082441 | R4 | 2026-05-03

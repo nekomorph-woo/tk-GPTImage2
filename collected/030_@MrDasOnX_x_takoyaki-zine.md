@@ -3,6 +3,7 @@
 - **来源**: [@MrDasOnX](https://x.com/MrDasOnX/status/2050456775942611454)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 博主评论
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

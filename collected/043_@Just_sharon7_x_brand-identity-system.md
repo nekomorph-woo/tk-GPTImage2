@@ -3,6 +3,7 @@
 - **来源**: [@Just_sharon7](https://x.com/Just_sharon7/status/2050479284075262340)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

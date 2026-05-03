@@ -3,6 +3,7 @@
 - **来源**: [@monad](https://x.com/monad/status/2050218433829085362)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

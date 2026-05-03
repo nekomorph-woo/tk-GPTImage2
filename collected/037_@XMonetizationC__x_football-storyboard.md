@@ -3,6 +3,7 @@
 - **来源**: [@XMonetizationC_](https://x.com/XMonetizationC_/status/2050191458146369856)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

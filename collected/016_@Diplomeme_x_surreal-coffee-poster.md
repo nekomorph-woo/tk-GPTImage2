@@ -3,6 +3,7 @@
 - **来源**: [@Diplomeme](https://x.com/Diplomeme/status/2050138429699313813)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 博主评论
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

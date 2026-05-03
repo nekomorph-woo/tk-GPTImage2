@@ -3,6 +3,7 @@
 - **来源**: [@Strength04_X](https://x.com/Strength04_X/status/2050420683482800333)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

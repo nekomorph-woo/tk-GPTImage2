@@ -3,6 +3,7 @@
 - **来源**: [@azed_ai](https://x.com/azed_ai/status/2048748266293190833)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 博主评论
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

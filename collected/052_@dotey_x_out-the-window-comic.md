@@ -3,6 +3,7 @@
 - **来源**: [@dotey](https://x.com/dotey/status/2046752332596093437)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

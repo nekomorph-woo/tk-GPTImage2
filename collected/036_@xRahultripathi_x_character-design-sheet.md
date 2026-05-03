@@ -3,6 +3,7 @@
 - **来源**: [@xRahultripathi](https://x.com/xRahultripathi/status/2050152865566708134)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

@@ -3,6 +3,7 @@
 - **来源**: [@0xtonixie](https://x.com/0xtonixie/status/2050133789129748559)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 博主评论
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

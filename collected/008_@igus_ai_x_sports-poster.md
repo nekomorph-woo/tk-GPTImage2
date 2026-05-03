@@ -3,6 +3,7 @@
 - **来源**: [@igus_ai](https://x.com/igus_ai/status/2047030997175124052)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 博主评论
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

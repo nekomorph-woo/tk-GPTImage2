@@ -3,6 +3,7 @@
 - **来源**: [@ChillaiKalan__](https://x.com/ChillaiKalan__/status/2050542189944709280)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

@@ -3,6 +3,7 @@
 - **来源**: [@fofrAI](https://x.com/fofrAI/status/2046603571286720769)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

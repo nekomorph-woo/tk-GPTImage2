@@ -3,6 +3,7 @@
 - **来源**: [@ShamsAmin56](https://x.com/ShamsAmin56/status/2050281206139461780)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

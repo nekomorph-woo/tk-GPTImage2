@@ -1,0 +1,1 @@
+portrait, poster, comic, infographic, food, fashion, storyboard, children-book, product-ad, identity, logo, UI/UX, architecture, landscape, typography, texture, 3D-render, character-design, photography, illustration, packaging, motion/animation

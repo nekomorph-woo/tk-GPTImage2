@@ -3,6 +3,7 @@
 - **来源**: [@aimikoda](https://x.com/aimikoda/status/2049589851062730877)
 - **采集时间**: 2026-05-02
 - **Prompt 位置**: 博主评论
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

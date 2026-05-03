@@ -3,6 +3,7 @@
 - **来源**: [@rovvmut_](https://x.com/rovvmut_/status/2048255585691582488)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

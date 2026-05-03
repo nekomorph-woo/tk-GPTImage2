@@ -3,6 +3,7 @@
 - **来源**: [@Taaruk_](https://x.com/Taaruk_/status/2050252605050491014)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

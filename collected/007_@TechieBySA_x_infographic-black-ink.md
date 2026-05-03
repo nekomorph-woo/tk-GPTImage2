@@ -3,6 +3,7 @@
 - **来源**: [@TechieBySA](https://x.com/TechieBySA/status/2013316513701216688)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 博主评论
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

@@ -3,6 +3,7 @@
 - **来源**: [@Ankit_patel211](https://x.com/Ankit_patel211/status/2050446052994797858)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

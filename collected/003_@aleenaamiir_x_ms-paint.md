@@ -3,6 +3,7 @@
 - **来源**: [@aleenaamiir](https://x.com/aleenaamiir/status/2050053874791407621)
 - **采集时间**: 2026-05-02
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 

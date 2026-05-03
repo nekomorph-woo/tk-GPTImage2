@@ -3,6 +3,7 @@
 - **来源**: [@Ciri_ai](https://x.com/Ciri_ai/status/2050094437821513896)
 - **采集时间**: 2026-05-03
 - **Prompt 位置**: 主推文
+- **搜索词**: gpt-image-2 prompt
 
 ## Prompt
 
