@@ -54,5 +54,8 @@ node .claude/skills/generate-image/scripts/codex.mjs \
 | `--prompt-file` | 二选一 | 提示词文件路径 |
 | `--name` | 否 | 运行名称，用于输出目录命名 |
 | `--n` | 否 | 生成数量，默认 1 |
+| `--proxy` | 否 | 代理地址（如 `http://127.0.0.1:7890`），改善连接稳定性 |
 
 不需要 `OPENAI_API_KEY`。Codex 可能对 prompt 进行额外增强（augment），实际生成的图片可能与原始 prompt 有差异。单次调用最长等待 10 分钟。
+
+代理优先级：`--proxy` 参数 > `.env` 中 `CODEX_PROXY` > 不使用代理。留空则直连。

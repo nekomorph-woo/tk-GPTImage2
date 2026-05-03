@@ -2,7 +2,7 @@ import { execSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { ensureDir, slugify, timestamp } from "./lib/env.mjs";
+import { ensureDir, slugify, timestamp, loadDotEnv } from "./lib/env.mjs";
 
 const codexHome = process.env.CODEX_HOME || path.join(os.homedir(), ".codex");
 const generatedImagesDir = path.join(codexHome, "generated_images");
@@ -41,7 +41,7 @@ function getImageDimensions(filePath) {
   return { width: Number(w), height: Number(h) };
 }
 
-export async function generate({ prompt, name, outDir = "gen/outputs", size, n = 1 }) {
+export async function generate({ prompt, name, outDir = "gen/outputs", size, proxy, n = 1 }) {
   let codexVersion;
   try {
     codexVersion = execSync("codex --version", { encoding: "utf8" }).trim();
@@ -63,9 +63,10 @@ export async function generate({ prompt, name, outDir = "gen/outputs", size, n =
     if (n > 1) process.stderr.write(`正在生成 ${i + 1}/${n}...\n`);
 
     const genStart = Date.now();
+    const execEnv = proxy ? { ...process.env, HTTPS_PROXY: proxy, HTTP_PROXY: proxy } : undefined;
     execSync(
       `codex exec -s workspace-write --skip-git-repo-check ${JSON.stringify(`Use the image generation tool to create an image with this prompt:\n\n${prompt}`)}`,
-      { encoding: "utf8", timeout: 600_000, stdio: ["pipe", "pipe", "inherit"] }
+      { encoding: "utf8", timeout: 600_000, stdio: ["pipe", "pipe", "inherit"], env: execEnv }
     );
 
     const savedPath = findNewestCodexImage(genStart);
@@ -100,6 +101,7 @@ export async function generate({ prompt, name, outDir = "gen/outputs", size, n =
 }
 
 // CLI 入口
+loadDotEnv();
 const { parseArgs } = await import("./lib/args.mjs");
 const { readTextMaybeFile } = await import("./lib/env.mjs");
 const args = parseArgs();
@@ -109,6 +111,7 @@ if (prompt) {
   const saved = await generate({
     prompt,
     name: args.name,
+    proxy: args.proxy || process.env.CODEX_PROXY || undefined,
     n: Number(args.n || 1)
   });
   console.log(JSON.stringify(saved, null, 2));
