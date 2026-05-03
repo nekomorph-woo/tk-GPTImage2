@@ -20,7 +20,7 @@ node .claude/skills/generate-image/scripts/api.mjs \
 | `--prompt` | 二选一 | 直接提供提示词文本 |
 | `--prompt-file` | 二选一 | 提示词文件路径 |
 | `--name` | 否 | 运行名称，用于输出目录命名 |
-| `--size` | 否 | 图片尺寸，默认 1024x1024 |
+| `--size` | 否 | 图片尺寸，不传则由模型决定 |
 | `--quality` | 否 | low/medium/high，默认 medium |
 | `--format` | 否 | png/jpeg/webp，默认 png |
 | `--compression` | 否 | JPEG 压缩质量 0-100 |
@@ -46,11 +46,6 @@ node .claude/skills/generate-image/scripts/codex.mjs \
 node .claude/skills/generate-image/scripts/codex.mjs \
   --prompt "创建一张高级产品海报..." \
   --name codex-test --n 3
-
-# 指定尺寸（Codex 固定输出 1254x1254，通过 sips 后处理缩放）
-node .claude/skills/generate-image/scripts/codex.mjs \
-  --prompt "创建一张竖版海报..." \
-  --name codex-test --size 1024x1536
 ```
 
 | 参数 | 必填 | 说明 |
@@ -58,7 +53,6 @@ node .claude/skills/generate-image/scripts/codex.mjs \
 | `--prompt` | 二选一 | 直接提供提示词文本 |
 | `--prompt-file` | 二选一 | 提示词文件路径 |
 | `--name` | 否 | 运行名称，用于输出目录命名 |
-| `--size` | 否 | 目标尺寸（Codex 固定输出 1254x1254，通过 sips 后处理缩放） |
 | `--n` | 否 | 生成数量，默认 1 |
 
 不需要 `OPENAI_API_KEY`。Codex 可能对 prompt 进行额外增强（augment），实际生成的图片可能与原始 prompt 有差异。单次调用最长等待 10 分钟。

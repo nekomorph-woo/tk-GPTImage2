@@ -5,8 +5,9 @@ export async function generate({ prompt, name, outDir = "gen/outputs", size, qua
   loadDotEnv();
   const client = createClient();
   const params = { ...defaultImageOptions({ size, quality, format, background, compression }), prompt, n };
+  const start = Date.now();
   const result = await client.images.generate(params);
-  return writeImageResult({ result, prompt, params, name, outDir });
+  return writeImageResult({ result, prompt, params, name, outDir, generation_time_ms: Date.now() - start });
 }
 
 // CLI 入口
