@@ -8,7 +8,15 @@ export function parseArgs(argv = process.argv.slice(2)) {
     if (!next || next.startsWith("--")) {
       args[key] = true;
     } else {
-      args[key] = next;
+      if (key in args) {
+        if (Array.isArray(args[key])) {
+          args[key].push(next);
+        } else {
+          args[key] = [args[key], next];
+        }
+      } else {
+        args[key] = next;
+      }
       i += 1;
     }
   }
