@@ -2,5 +2,6 @@
 node_modules/
 gen/outputs/
 .DS_Store
+.idea/
 .claude/skills/collect-image-2-prompt/scripts/.ralph-baseline
 .claude/ralph-loop.local.md
