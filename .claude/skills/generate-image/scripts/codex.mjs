@@ -41,12 +41,16 @@ function getImageDimensions(filePath) {
   return { width: Number(w), height: Number(h) };
 }
 
-export async function generate({ prompt, name, outDir = "gen/outputs", size, proxy, n = 1 }) {
+export async function generate({ prompt, name, outDir = "gen/outputs", size, proxy, n = 1, references = [] }) {
   let codexVersion;
   try {
     codexVersion = execSync("codex --version", { encoding: "utf8" }).trim();
   } catch {
     throw new Error("未找到 codex CLI。请先安装：npm install -g @openai/codex");
+  }
+
+  for (const ref of references) {
+    if (!fs.existsSync(ref)) throw new Error(`参考图不存在: ${ref}`);
   }
 
   n = Math.min(n, 10);
@@ -59,13 +63,18 @@ export async function generate({ prompt, name, outDir = "gen/outputs", size, pro
   const imageSizes = [];
   const totalStart = Date.now();
 
+  const refInstruction = references.length
+    ? `Reference images are provided as input. Use them for character/style consistency. `
+    : "";
+
   for (let i = 0; i < n; i++) {
     if (n > 1) process.stderr.write(`正在生成 ${i + 1}/${n}...\n`);
 
     const genStart = Date.now();
     const execEnv = proxy ? { ...process.env, HTTPS_PROXY: proxy, HTTP_PROXY: proxy } : undefined;
+    const imageSuffix = references.length ? ` ${references.map(r => `--image "${path.resolve(r)}"`).join(" ")}` : "";
     execSync(
-      `codex exec -s workspace-write --skip-git-repo-check ${JSON.stringify(`Use the image generation tool to create an image with this prompt:\n\n${prompt}`)}`,
+      `codex exec -s workspace-write --skip-git-repo-check ${JSON.stringify(`${refInstruction}Use the image generation tool to create an image with this prompt:\n\n${prompt}`)}${imageSuffix}`,
       { encoding: "utf8", timeout: 600_000, stdio: ["pipe", "pipe", "inherit"], env: execEnv }
     );
 
@@ -84,6 +93,13 @@ export async function generate({ prompt, name, outDir = "gen/outputs", size, pro
     written.push(path.resolve(outputPath));
   }
 
+  const copied = [];
+  for (const ref of references) {
+    const dest = path.join(dir, `ref-${path.basename(ref)}`);
+    fs.copyFileSync(ref, dest);
+    copied.push(dest);
+  }
+
   const metadata = {
     source: "codex-cli",
     prompt,
@@ -95,6 +111,7 @@ export async function generate({ prompt, name, outDir = "gen/outputs", size, pro
     written,
     created_at: new Date().toISOString()
   };
+  if (copied.length) metadata.references = copied;
   fs.writeFileSync(path.join(dir, "metadata.json"), JSON.stringify(metadata, null, 2));
 
   return { dir, written };
@@ -108,11 +125,17 @@ const args = parseArgs();
 const prompt = readTextMaybeFile(args.prompt, args["prompt-file"]);
 
 if (prompt) {
+  let references = [];
+  if (args.reference) {
+    references = Array.isArray(args.reference) ? args.reference : [args.reference];
+  }
+
   const saved = await generate({
     prompt,
     name: args.name,
     proxy: args.proxy || process.env.CODEX_PROXY || undefined,
-    n: Number(args.n || 1)
+    n: Number(args.n || 1),
+    references
   });
   console.log(JSON.stringify(saved, null, 2));
 }
