@@ -357,11 +357,10 @@ def suggest(term: str, count: int) -> dict:
     else:
         sort_mode = "top"
 
-    target = total + count
     max_iter = math.ceil(count * 2.5)
 
     ralph_cmd = RALPH_CMD_TEMPLATE.format(
-        query=term, count=count, sort=sort_mode, target=target, max_iter=max_iter,
+        query=term, count=count, sort=sort_mode, target=count, max_iter=max_iter,
     )
 
     return {
@@ -371,7 +370,7 @@ def suggest(term: str, count: int) -> dict:
         "recommended_sort": sort_mode,
         "hours_since_previous": td.get("hours_since"),
         "current_collected": total,
-        "target_total": target,
+        "target_new": count,
         "skip_rate": round(skip_rate, 2),
         "max_iterations": max_iter,
         "baseline_cmd": BASELINE_CMD,
