@@ -32,6 +32,11 @@ export function timestamp() {
   return new Date().toISOString().replace(/[:.]/g, "-");
 }
 
+export function getConfig(key, defaultValue = "") {
+  loadDotEnv();
+  return process.env[key] || defaultValue;
+}
+
 export function readTextMaybeFile(value, fallbackFile) {
   if (value) return value;
   if (fallbackFile) return fs.readFileSync(path.resolve(fallbackFile), "utf8").trim();

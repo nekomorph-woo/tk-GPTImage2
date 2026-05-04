@@ -24,17 +24,19 @@ lib/
 
 > 未提供提示词。请先使用 `/iwanna-image-prompt` 构造提示词，或直接提供 `--prompt` 参数。
 
-**API 模式**：`npm install` 已执行 + `.env` 包含 `OPENAI_API_KEY`
+**默认生图模式**：执行以下命令获取配置：
 
-**Codex CLI 模式**：`npm install -g @openai/codex 已安装 + `codex login` 已登录 ChatGPT Plus。
+```bash
+node -e "import('./scripts/lib/env.mjs').then(m => console.log(m.getConfig('GENERATE_MODE', 'api')))"
+```
 
-默认生图模式由 `.env` 中 `GENERATE_MODE` 决定（默认 `api`，可选 `codex`）。仅当用户明确要求使用另一种模式，或 `GENERATE_MODE=codex` 但缺少 Codex 环境时才覆盖。
+输出 `api` 或 `codex`。用户明确要求切换时覆盖。环境缺失（如 codex 未安装、API Key 未设置）由脚本自行报错，无需提前检查。
 
 ## 工作流
 
 ### 1. 选择脚本
 
-默认 `api.mjs`（API 模式）。`.env` 中 `GENERATE_MODE=codex` 时默认使用 `codex.mjs`。用户明确要求切换时覆盖。
+默认 `api.mjs`（API 模式）。前置检查中获取的默认模式为 `codex` 时使用 `codex.mjs`。用户明确要求切换时覆盖。
 
 | 需求 | 脚本 |
 |------|------|
