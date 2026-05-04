@@ -26,18 +26,20 @@ lib/
 
 **API 模式**：`npm install` 已执行 + `.env` 包含 `OPENAI_API_KEY`
 
-**Codex CLI 模式**：`npm install -g @openai/codex` 已安装 + `codex login` 已登录 ChatGPT Plus
+**Codex CLI 模式**：`npm install -g @openai/codex 已安装 + `codex login` 已登录 ChatGPT Plus。
 
-确认用户是否有 API 预算 — 没有预算时优先使用 Codex CLI 模式。
+默认生图模式由 `.env` 中 `GENERATE_MODE` 决定（默认 `api`，可选 `codex`）。仅当用户明确要求使用另一种模式，或 `GENERATE_MODE=codex` 但缺少 Codex 环境时才覆盖。
 
 ## 工作流
 
 ### 1. 选择脚本
 
+默认 `api.mjs`（API 模式）。`.env` 中 `GENERATE_MODE=codex` 时默认使用 `codex.mjs`。用户明确要求切换时覆盖。
+
 | 需求 | 脚本 |
 |------|------|
-| 单张生成（API） | `api.mjs` |
-| 单张生成（Codex） | `codex.mjs` |
+| 单张生成（API，默认） | `api.mjs` |
+| 单张生成（Codex CLI） | `codex.mjs` |
 
 > 批量生图请使用 `/controlled-experiment`（自动设计实验矩阵 + 评分 + 结论）。
 
