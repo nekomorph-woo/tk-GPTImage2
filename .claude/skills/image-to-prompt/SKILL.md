@@ -1,6 +1,6 @@
 ---
 name: image-to-prompt
-description: 从 X 博文图片反推 GPT Image 2 生图提示词。Use when 用户提供 X 博文链接并要求反推/逆向工程/分析图片的提示词，或提到 "反推提示词"、"图片转 prompt"、"识图写 prompt"。
+description: 从 X 博文图片反推 GPT Image 2 生图提示词。Use when 用户提供一个 X 博文链接并要求反推/逆向工程/分析图片的提示词，或提到 "反推提示词"、"图片转 prompt"、"识图写 prompt"。每次只接受一个链接，多个链接需多次调用。
 ---
 
 # 图片反推提示词
@@ -31,6 +31,18 @@ bb-browser eval "$(cat .claude/skills/image-to-prompt/scripts/extract-post-image
 输出 JSON：`{"images": ["url1", ...], "author": "@username", "text": "推文原文"}`
 
 如推文有 "Show more" 按钮未自动展开，手动点击后再执行提取。
+
+### 步骤 1a：前置 URL 去重检查
+
+提取完成后，在 `collected/` 中搜索该推文 URL：
+
+```
+grep -rl "<X post URL>" collected/
+```
+
+**命中** → 该推文已在 collect 流程中收集过，终止流程并报告用户。
+
+**未命中** → 继续步骤 2。
 
 ### 步骤 2：逐图分析并写入文件
 
@@ -96,6 +108,7 @@ RESULT=$(python3 .claude/skills/collect-image-2-prompt/scripts/dedup-check.py "<
 ## 检查清单
 
 - [ ] 图片已从推文中提取（`pbs.twimg.com/media` URL）
+- [ ] 前置 URL 去重检查已执行（命中则终止）
 - [ ] 推文文本已提取（博主心得作为辅助线索）
 - [ ] 图片通过 bb-browser fetch → base64 → MCP 临时 URL 路径分析
 - [ ] 逐张处理：每张图分析完立即反推、去重、写入，再处理下一张
