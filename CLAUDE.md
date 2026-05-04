@@ -10,7 +10,7 @@ GPT Image 2 提示词研究与生图实验室。围绕 Claude Code 的技能（S
 
 ## 技能与子代理
 
-7 个技能定义在 `.claude/skills/`，各有独立 `SKILL.md`。4 个共享子代理定义在 `.claude/agents/`。
+8 个技能定义在 `.claude/skills/`，各有独立 `SKILL.md`。4 个共享子代理定义在 `.claude/agents/`。
 
 | 技能 | 触发场景 |
 |------|----------|
@@ -20,6 +20,7 @@ GPT Image 2 提示词研究与生图实验室。围绕 Claude Code 的技能（S
 | `/controlled-experiment` | 用户要求 A/B 测试、变量对比 |
 | `/collect-image-2-prompt` | 用户要求从 X 平台收集提示词 |
 | `/image-to-prompt` | 用户提供 X 博文链接要求反推提示词 |
+| `/x-to-prompt` | 用户提供 X 推文链接要求提取其中的 prompt |
 | `/prepare-collection` | 用户要求分析覆盖度或准备收集 |
 
 `/controlled-experiment` 和 `/image-research` 共享 `image-runner`（批量生图）和 `evaluator`（7 维度评分）两个子代理。
@@ -30,7 +31,7 @@ GPT Image 2 提示词研究与生图实验室。围绕 Claude Code 的技能（S
 |------|----------|------|
 | `gen/outputs/` | generate-image | 生成的图片 + metadata.json + 参考图副本 |
 | `ideas/` | iwanna-image-prompt | 概念塑造旅程（源头→概念→提示词→生成记录） |
-| `collected/` | collect-image-2-prompt | 结构化 prompt（按编号命名） |
+| `collected/` | collect-image-2-prompt, x-to-prompt, image-to-prompt | 结构化 prompt（按编号命名） |
 | `research/studies/` | image-research | 研究会话（收集素材 + 报告 + 评分） |
 | `experiments/` | controlled-experiment | 实验矩阵 + 评分 + 结论 |
 
