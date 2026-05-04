@@ -1,0 +1,64 @@
+{
+  "experiment": "碧蓝航线角色一致性 recipe 验证 — Z52（铁血驱逐舰）",
+  "context": "跨舰种/跨阵营验证，Z52铁血驱逐舰 vs 之前Enterprise白鹰航母。图片1-2为Step1纯净背景参考图，图片3为Step2海战场景编辑（基于图片1作为参考图）。",
+  "images": [
+    {
+      "name": "z52-reference-studio-01",
+      "file": "gen/outputs/2026-05-04T11-19-15-862Z-z52-reference-step1/z52-azur-lane-reference-studio-01.png",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 4,
+        "prompt_compliance": 4,
+        "material_quality": 4,
+        "text_quality": null,
+        "stability": null,
+        "commercial_usability": 4
+      },
+      "total": 21,
+      "max": 30,
+      "notes": "Z52标志性特征还原优秀：银白双马尾、发丝天线、红眼、铁血黑红军装、铁十字标志均清晰可辨。驱逐舰舰装（鱼雷发射管、小口径舰炮）可见且比例合理。暖灰色干净背景符合纯净参考图要求。轻微扣分：舰装细节（深度炸药架）不够明确，红能量光晕效果较弱。"
+    },
+    {
+      "name": "z52-reference-studio-02",
+      "file": "gen/outputs/2026-05-04T11-19-15-862Z-z52-reference-step1/z52-azur-lane-reference-studio-02.png",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 4,
+        "prompt_compliance": 4,
+        "material_quality": 4,
+        "text_quality": null,
+        "stability": null,
+        "commercial_usability": 4
+      },
+      "total": 21,
+      "max": 30,
+      "notes": "与图片1同批生成，Z52核心特征一致。银白双马尾、红眼、黑红军装、舰装均准确呈现。构图与图片1对称，均居中全身站立。两张图之间面部略有差异（同一prompt两份输出的常见问题），但不影响角色辨识。舰装造型与图片1有细微差异，属于正常变异范围。"
+    },
+    {
+      "name": "z52-naval-battle-01",
+      "file": "gen/outputs/2026-05-04T11-24-08-557Z-z52-naval-battle-step2/z52-azur-lane-naval-battle-01.png",
+      "scores": {
+        "subject_clarity": 4,
+        "composition": 3,
+        "prompt_compliance": 3,
+        "material_quality": 3,
+        "text_quality": null,
+        "stability": null,
+        "commercial_usability": 3
+      },
+      "total": 16,
+      "max": 25,
+      "notes": "Z52在海战场景中仍可辨识：双马尾、红眼、黑红军装保持。但参考图到场景编辑的一致性有明显退化——面部细节与图片1差异较大，舰装在海战环境中的可见度和辨识度下降。海面波浪和战斗特效增加了画面复杂度，导致视觉层级不够清晰。材质方面，水面反光和远处的战斗效果尚可但不够精细。需要进一步优化场景编辑的参考图利用策略。"
+    }
+  ],
+  "cross_fleet_comparison": {
+    "subject": "Z52 vs Enterprise 跨舰种一致性对比",
+    "findings": [
+      "铁血阵营配色（黑红军装+铁十字）还原准确，与白鹰白蓝配色的Enterprise同样可靠",
+      "Z52驱逐舰舰装比Enterprise航母舰装更难辨识，原因在于驱逐舰舰装体量小、细节密集",
+      "银白双马尾+发丝天线+红眼的标志性特征组合在两张参考图中保持良好，场景图中出现退化",
+      "Step2场景编辑的一致性保持策略在驱逐舰上效果略逊于航母，可能需要针对小型舰装增加描述锚点"
+    ]
+  },
+  "evaluated_at": "2026-05-04T12:00:00.000Z"
+}

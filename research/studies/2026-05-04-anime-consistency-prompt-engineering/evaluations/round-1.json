@@ -1,0 +1,80 @@
+{
+  "experiment": "DNA Template 纯文本角色一致性验证 — Enterprise",
+  "context": "4张图全部使用相同纯文本 DNA 描述（无参考图），测试纯文本跨生成一致性。baseline 1-2 为纯净背景基准图，sunset-deck 1-2 为日落甲板场景。与 Research ①（参考图驱动，98.3%）对比。",
+  "images": [
+    {
+      "name": "enterprise-studio-baseline-01",
+      "file": "gen/outputs/2026-05-04T10-58-36-812Z-enterprise-dna-baseline/enterprise-studio-baseline-01.png",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 5,
+        "prompt_compliance": 5,
+        "material_quality": 4,
+        "text_quality": null,
+        "stability": null,
+        "commercial_usability": 4
+      },
+      "total": 23,
+      "max": 25,
+      "notes": "角色主体极其清晰，银白双马尾、猫耳发箍、锚形装饰、航母装置全部准确呈现。居中构图干净，暖灰影棚背景无干扰。动漫线稿+赛璐璐着色风格一致。材质方面制服金边和机械装置的细节略有简化但不影响辨识。手指数量正确。作为 baseline 非常合格。"
+    },
+    {
+      "name": "enterprise-studio-baseline-02",
+      "file": "gen/outputs/2026-05-04T10-58-36-812Z-enterprise-dna-baseline/enterprise-studio-baseline-02.png",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 5,
+        "prompt_compliance": 5,
+        "material_quality": 4,
+        "text_quality": null,
+        "stability": null,
+        "commercial_usability": 4
+      },
+      "total": 23,
+      "max": 25,
+      "notes": "与 baseline-01 高度一致，角色DNA特征（发色、瞳色、制服、猫耳、装置）保持稳定。构图同样居中干净。两张 baseline 之间的一致性证明纯文本 DNA 描述在相同场景下能可靠复现角色。细微差异在姿态角度而非外观特征上。"
+    },
+    {
+      "name": "enterprise-sunset-deck-01",
+      "file": "gen/outputs/2026-05-04T11-03-37-300Z-enterprise-dna-sunset-deck/enterprise-sunset-deck-01.png",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 4,
+        "prompt_compliance": 5,
+        "material_quality": 4,
+        "text_quality": null,
+        "stability": null,
+        "commercial_usability": 4
+      },
+      "total": 22,
+      "max": 25,
+      "notes": "角色在日落甲板场景中依然清晰可辨，DNA特征完整保留——银白双马尾、灰蓝瞳色、海军制服、猫耳发箍、航母装置全部正确。动态姿势自然，风吹效果到位。日落暖光从右侧照射，天空渐变和海面效果良好。构图比 baseline 稍显拥挤（甲板元素较多），但视觉层级仍然清楚。"
+    },
+    {
+      "name": "enterprise-sunset-deck-02",
+      "file": "gen/outputs/2026-05-04T11-03-37-300Z-enterprise-dna-sunset-deck/enterprise-sunset-deck-02.png",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 4,
+        "prompt_compliance": 5,
+        "material_quality": 4,
+        "text_quality": null,
+        "stability": null,
+        "commercial_usability": 4
+      },
+      "total": 22,
+      "max": 25,
+      "notes": "与 sunset-deck-01 高度一致的角色外观，DNA特征稳定。日落场景的氛围和光照效果与上一张匹配。两张日落图之间以及与 baseline 之间的角色一致性良好，证明纯文本 DNA 在跨场景切换时仍能维持角色辨识度。构图同样因场景元素丰富而略逊于简洁的 baseline。"
+    }
+  ],
+  "consistency_analysis": {
+    "hair_color": "4/4 一致 — 全部为银白色双马尾+呆毛",
+    "eye_color": "4/4 一致 — 全部为灰蓝色锐利瞳孔",
+    "outfit": "4/4 一致 — 白蓝海军制服+金边+锚纹样+黑色过膝袜",
+    "accessories": "4/4 一致 — 猫耳发箍+锚形装饰+航母机械装置",
+    "face_features": "4/4 一致 — 椭圆脸型、白皙肤色、表情风格统一",
+    "cross_scene_consistency": "baseline 之间一致性极高，sunset-deck 之间一致性极高，跨场景（baseline→sunset）角色外观保持稳定",
+    "vs_reference_image_approach": "纯文本 DNA 方法在角色核心特征一致性上接近参考图驱动水平，但在细节粒度（如制服褶皱、机械装置结构）上略有简化。纯文本方法的稳定性令人满意，跨场景切换未出现明显的角色漂移。"
+  },
+  "evaluated_at": "2026-05-04T12:00:00.000Z"
+}

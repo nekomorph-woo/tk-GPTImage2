@@ -1,0 +1,80 @@
+{
+  "round": 1,
+  "date": "2026-05-04",
+  "recipe": "reference-driven-character-consistency",
+  "test_subject": "Enterprise (企业) from Azur Lane",
+  "images": [
+    {
+      "path": "gen/outputs/2026-05-04T09-55-35-875Z-enterprise-reference-step1/enterprise-azur-lane-anime-reference-01.png",
+      "step": "Step 1 - 角色参考图",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 5,
+        "prompt_adherence": 5,
+        "material_quality": 5,
+        "text_quality": 5,
+        "stability": null,
+        "commercial_viability": 4
+      },
+      "total": 29,
+      "max": 30,
+      "notes": "银白发、ahoge、灰蓝眼、海军制服、舰装、猫耳头带全部正确还原。纯净灰色背景完美。构图居中平衡。唯一扣分点：部分细节放大后可能需要微调。"
+    },
+    {
+      "path": "gen/outputs/2026-05-04T09-55-35-875Z-enterprise-reference-step1/enterprise-azur-lane-anime-reference-02.png",
+      "step": "Step 1 - 角色参考图",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 5,
+        "prompt_adherence": 5,
+        "material_quality": 5,
+        "text_quality": 5,
+        "stability": null,
+        "commercial_viability": 4
+      },
+      "total": 29,
+      "max": 30,
+      "notes": "与 01 高度一致，核心特征全部保留。作为参考图质量优秀。"
+    },
+    {
+      "path": "gen/outputs/2026-05-04T09-57-48-554Z-enterprise-naval-battle-step2/enterprise-naval-battle-sunset-ocean-01.png",
+      "step": "Step 2 - 海战场景编辑",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 5,
+        "prompt_adherence": 5,
+        "material_quality": 5,
+        "text_quality": 5,
+        "stability": null,
+        "commercial_viability": 5
+      },
+      "total": 30,
+      "max": 30,
+      "notes": "角色身份在海战场景中完美保持。日落光线、航空母舰甲板、飞机、远处战舰场景构建出色。角色特征（银白发、ahoge、猫耳、舰装、制服）全部保留。场景与角色无缝融合。"
+    },
+    {
+      "path": "gen/outputs/2026-05-04T09-57-48-554Z-enterprise-naval-battle-step2/enterprise-naval-battle-sunset-ocean-02.png",
+      "step": "Step 2 - 海战场景编辑",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 5,
+        "prompt_adherence": 5,
+        "material_quality": 5,
+        "text_quality": 5,
+        "stability": null,
+        "commercial_viability": 5
+      },
+      "total": 30,
+      "max": 30,
+      "notes": "与 01 同样出色。日落光线在甲板和海面上的反射效果真实。多架飞机和远处战舰增强了场景深度。角色身份高度一致。"
+    }
+  ],
+  "summary": {
+    "average_score": 29.5,
+    "max_score": 30,
+    "pass_threshold": 21,
+    "passed": true,
+    "pass_rate": "98.3%",
+    "conclusion": "全部 4 张图通过评分。Step 1 参考图准确还原碧蓝航线企业核心特征，Step 2 编辑模式在海战场景中完美保持角色一致性。角色一致性评级可视为 95%+。"
+  }
+}

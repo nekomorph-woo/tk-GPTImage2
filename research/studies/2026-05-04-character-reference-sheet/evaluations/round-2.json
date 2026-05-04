@@ -1,0 +1,49 @@
+{
+  "round": 2,
+  "date": "2026-05-04",
+  "recipe": "character-reference-sheet-generation",
+  "test_subject": "Enterprise (企业) from Azur Lane",
+  "revision": "简化Step1布局：从复杂多面板（三视图+六表情+服装拆解+色板）简化为仅三视角turnaround+色板",
+  "images": [
+    {
+      "path": "gen/outputs/2026-05-04T10-46-11-722Z-enterprise-turnaround-simple-round2/enterprise-azur-lane-turnaround-anime-01.png",
+      "step": "Step 1 - 简化版角色设定集",
+      "scores": {
+        "subject_clarity": 4,
+        "composition": 4,
+        "prompt_adherence": 4,
+        "material_quality": 4,
+        "text_quality": 3,
+        "stability": null,
+        "commercial_viability": 3
+      },
+      "total": 22,
+      "max": 30,
+      "notes": "简化布局策略显著生效。三视角turnaround（front/side/back）水平排列清晰，视觉层级较Round 1有明显改善，每个视角都有明确的分区。Enterprise的关键特征（银白发、ahoge、猫耳头带、海军制服、航母rigging）均可识别。底部色板条和顶部角色名称标签均存在。不足：三个视角之间角色比例一致性仍不够完美（侧面和背面头身比与正面有轻微偏差），rigging机械结构在侧面和背面视图中简化较多，文字标签可读但字体较小且部分字符边缘模糊。整体信息密度和专业感比Round 1提升明显。"
+    },
+    {
+      "path": "gen/outputs/2026-05-04T10-46-11-722Z-enterprise-turnaround-simple-round2/enterprise-azur-lane-turnaround-anime-02.png",
+      "step": "Step 1 - 简化版角色设定集",
+      "scores": {
+        "subject_clarity": 4,
+        "composition": 3,
+        "prompt_adherence": 3,
+        "material_quality": 3,
+        "text_quality": 2,
+        "stability": null,
+        "commercial_viability": 2
+      },
+      "total": 17,
+      "max": 30,
+      "notes": "简化布局相比Round 1有一定改善，三视角结构基本可见，但执行质量不如图片01。角色特征识别度尚可，但三个视角之间的面部一致性较差，侧面视角的五官与正面明显不同。rigging细节在侧面视图中几乎丢失，材质质感不如图片01精细（布料褶皱和金属反射均偏简化）。文字标签存在但更难辨认，部分区域出现多余装饰元素干扰色板区域。构图方面，三个角色之间的间距不均匀，视觉重心偏移。整体可用性较低，需要较多清理。"
+    }
+  ],
+  "summary": {
+    "average_score": 19.5,
+    "max_score": 30,
+    "pass_threshold": 21,
+    "passed": false,
+    "pass_rate": "1/2 (50%)",
+    "conclusion": "Round 2简化布局策略呈现混合结果。图片01达到22/30（73.3%），超过21分通过线，说明简化布局确实能提升提示词遵循度和构图分数（Round 1图片01为20/30）。图片02仅17/30，低于Round 1的最低分，说明简化提示词并不必然改善输出质量，GPT Image 2在多角色turnaround上仍存在较大的随机性。两张图平均19.5/30与Round 1的Step1部分持平，但单图最高分从20提升至22，表明简化方向正确。关键瓶颈仍在于：(1) 三视角间角色一致性（面部、比例、rigging细节）不稳定；(2) 文字清晰度未达专业设定集标准。下一步建议：考虑将三视角拆分为单视角独立生成以提升一致性，或在提示词中增加更精确的面部锚点描述。"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "round": 1,
+  "date": "2026-05-04",
+  "recipe": "character-reference-sheet-generation",
+  "test_subject": "Enterprise (企业) from Azur Lane",
+  "images": [
+    {
+      "path": "gen/outputs/2026-05-04T10-27-55-016Z-enterprise-character-sheet-step1/enterprise-azur-lane-character-sheet.png",
+      "step": "Step 1 - 角色设定集",
+      "scores": {
+        "subject_clarity": 4,
+        "composition": 3,
+        "prompt_adherence": 3,
+        "material_quality": 4,
+        "text_quality": 3,
+        "stability": null,
+        "commercial_viability": 3
+      },
+      "total": 20,
+      "max": 30,
+      "notes": "角色特征（银白发、ahoge、海军制服、航母甲板骨架）识别度高，材质细节如金属 rigging 和布料质感良好。但布局未实现提示词要求的左右分区结构（左侧三视图转身、右侧六表情+服装拆解+色板），仅呈现了单角色全身展示，结构简化严重。文字标签存在但内容模糊、不完全可读。作为角色设定集，信息密度远低于预期。"
+    },
+    {
+      "path": "gen/outputs/2026-05-04T10-27-55-016Z-enterprise-character-sheet-step1/enterprise-azur-lane-character-sheet-02.png",
+      "step": "Step 1 - 角色设定集",
+      "scores": {
+        "subject_clarity": 4,
+        "composition": 3,
+        "prompt_adherence": 2,
+        "material_quality": 4,
+        "text_quality": 2,
+        "stability": null,
+        "commercial_viability": 2
+      },
+      "total": 17,
+      "max": 30,
+      "notes": "角色特征保持较好，与图片1一致性尚可，说明主体识别稳定。但构图更加杂乱，布局结构偏离提示词要求更远。文字标签几乎无法辨认，部分区域出现了多余的装饰元素干扰。航母 rigging 细节不如图片1完整。整体信息密度和结构化程度均未达到角色设定集的最低要求。"
+    },
+    {
+      "path": "gen/outputs/2026-05-04T10-33-15-291Z-enterprise-sakura-step2/enterprise-sakura-bench-gentle-smile.png",
+      "step": "Step 2 - 樱花场景编辑",
+      "scores": {
+        "subject_clarity": 5,
+        "composition": 4,
+        "prompt_adherence": 4,
+        "material_quality": 4,
+        "text_quality": null,
+        "stability": null,
+        "commercial_viability": 4
+      },
+      "total": 21,
+      "max": 25,
+      "notes": "樱花场景氛围营造出色，粉色调自然光透过花瓣的效果 convincing。角色坐在木长椅上仰望樱花的姿态与提示词高度吻合。银白发、制服、猫耳头带等特征保留良好。构图采用竖幅居中，视觉层级清晰。不足之处：角色面部细节与 Step1 参考图存在一定偏差，肤色和五官比例略有变化，rigging 细节简化。整体效果可直接用于插画用途。"
+    },
+    {
+      "path": "gen/outputs/2026-05-04T10-33-15-291Z-enterprise-sakura-step2/enterprise-sakura-bench-gentle-smile-02.png",
+      "step": "Step 2 - 樱花场景编辑",
+      "scores": {
+        "subject_clarity": 4,
+        "composition": 4,
+        "prompt_adherence": 4,
+        "material_quality": 4,
+        "text_quality": null,
+        "stability": null,
+        "commercial_viability": 4
+      },
+      "total": 20,
+      "max": 25,
+      "notes": "与图片3整体风格一致，樱花氛围和构图均表现良好。角色姿态和环境布局合理。主要不足：角色面部与图片3及参考图之间的一致性有待提高，头发颜色偏暖（偏向淡金而非银白），制服细节有轻微变形。木长椅和背景花园的渲染质量不错。两张 Step2 图片风格统一性较好，说明参考图传递角色特征的机制基本有效。"
+    }
+  ],
+  "summary": {
+    "average_score": 19.5,
+    "max_score": 30,
+    "pass_threshold": 21,
+    "passed": false,
+    "pass_rate": "1/4 (25%)",
+    "conclusion": "Step1（角色设定集生成）是明显短板。两张图片均未能实现提示词要求的左右分区结构（三视图、六表情、服装拆解、色板），仅生成了简化版单角色展示，信息密度远低于专业角色设定集的标准。Step2（基于参考图编辑场景）表现显著优于 Step1，樱花场景氛围营造到位，角色姿态与环境融合自然，但角色面部与参考图之间仍存在可感知的偏差。改进方向：(1) Step1 需要将复杂布局拆分为更具体的面板级指令，或考虑分面板多次生成后拼接；(2) Step2 需加强面部一致性约束，可尝试在提示词中增加更具体的面部描述而非仅依赖参考图。"
+  }
+}
