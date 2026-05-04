@@ -29,6 +29,7 @@ GPT Image 2 提示词研究与生图实验室。围绕 Claude Code 的技能（S
 | 目录 | 归属技能 | 内容 |
 |------|----------|------|
 | `gen/outputs/` | generate-image | 生成的图片 + metadata.json + 参考图副本 |
+| `ideas/` | iwanna-image-prompt | 概念塑造旅程（源头→概念→提示词→生成记录） |
 | `collected/` | collect-image-2-prompt | 结构化 prompt（按编号命名） |
 | `research/studies/` | image-research | 研究会话（收集素材 + 报告 + 评分） |
 | `experiments/` | controlled-experiment | 实验矩阵 + 评分 + 结论 |
