@@ -102,5 +102,18 @@
     "skipped": 0,
     "overlap_with_previous": 1.0,
     "hours_since_previous": 0.0
+  },
+  {
+    "id": "20260504-007",
+    "search_term": "product advertising poster design",
+    "sort_mode": "top",
+    "target_count": 20,
+    "per_round_count": 1,
+    "start_time": "2026-05-04T06:54:05.316566+00:00",
+    "end_time": "2026-05-04T07:31:01.329684+00:00",
+    "collected": 20,
+    "skipped": 12,
+    "overlap_with_previous": 0.12,
+    "hours_since_previous": 14.0
   }
 ]

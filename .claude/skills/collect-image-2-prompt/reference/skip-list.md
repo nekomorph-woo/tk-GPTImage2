@@ -44,3 +44,8 @@
 - https://x.com/chongdashu/status/2031474716704436484 | R4 | 2026-05-04
 - https://x.com/Just_sharon7/status/2049804282854338750 | R4 | 2026-05-04
 - https://x.com/Shinning1010/status/2050101042956689441 | R4 | 2026-05-04
+- https://x.com/Tegadesigns/status/2049129204113932646 | R4 | 2026-05-04
+- https://x.com/Minahil42298354/status/2051195818401522151 | R4 | 2026-05-04
+- https://x.com/bodruzzama84767/status/2050686493187059812 | R4 | 2026-05-04
+- https://x.com/Diplomeme/status/2050597251966529663 | R4 | 2026-05-04
+- https://x.com/Strength04_X/status/2051199809080668441 | R4 | 2026-05-04
