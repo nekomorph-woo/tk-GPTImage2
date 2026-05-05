@@ -115,5 +115,18 @@
     "skipped": 12,
     "overlap_with_previous": 0.12,
     "hours_since_previous": 14.0
+  },
+  {
+    "id": "20260505-001",
+    "search_term": "gpt-image-2 动漫",
+    "sort_mode": "top",
+    "target_count": 50,
+    "per_round_count": 1,
+    "start_time": "2026-05-04T17:26:27.803310+00:00",
+    "end_time": "2026-05-04T18:29:57.586540+00:00",
+    "collected": 50,
+    "skipped": 33,
+    "overlap_with_previous": 0.6,
+    "hours_since_previous": 24.5
   }
 ]
