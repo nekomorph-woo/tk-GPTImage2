@@ -11,10 +11,12 @@ description: 从 X 博文图片反推 GPT Image 2 生图提示词。Use when 用
 
 - bb-browser 已安装且 daemon 正在运行
 - 浏览器中已登录 X（x.com）
+- codex CLI 已安装且可用（作为 MCP 识图模型的降级方案）
 
 ## 脚本
 
 - [scripts/extract-post-images.js](scripts/extract-post-images.js) — 从推文详情页提取图片 URL、作者和文本
+- [scripts/analyze-via-codex.mjs](scripts/analyze-via-codex.mjs) — 通过 codex CLI 分析图片，输出 10 要素描述
 
 ## 工作流程
 
@@ -50,6 +52,10 @@ grep -rl "<X post URL>" collected/
 
 #### 2.1 获取图片并分析
 
+**优先使用 MCP analyze_image**，若失败则**降级到 codex CLI**，两者均失败则**报错并跳过该图**。
+
+##### 路径 A：MCP analyze_image（首选）
+
 通过 bb-browser 在浏览器中 fetch 图片，转为 base64 data URL（系统会自动渲染为临时图片），再使用 MCP analyze_image 分析渲染后的临时 URL：
 
 ```
@@ -63,6 +69,30 @@ mcp__4_5v_mcp__analyze_image(imageSource="<临时URL>", prompt="...")
 ```
 
 分析 prompt 参考 [reference/reverse-prompt-guide.md](reference/reverse-prompt-guide.md) 的 10 个要素。
+
+**MCP 报错时**（特别是敏感内容检测、格式错误等），立即转入路径 B。
+
+##### 路径 B：codex CLI（降级）
+
+1. 通过 bb-browser 下载图片到本地临时文件：
+
+```
+bb-browser eval "fetch('<图片URL>').then(r=>r.blob()).then(b=>{const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='temp_img.jpg';a.click();URL.revokeObjectURL(u);return 'ok'})" --tab <x-tab>
+```
+
+2. 找到下载的文件（通常在 `~/Downloads/`），执行分析：
+
+```
+node .claude/skills/image-to-prompt/scripts/analyze-via-codex.mjs <本地图片路径>
+```
+
+3. 清理临时文件。
+
+**codex CLI 也失败时**（退出码非 0、输出为空、或连接重连后内容明显不可靠），**报错告知用户该图片无法分析，跳过该图，不生成收集文件**。
+
+##### 禁止事项
+
+**严禁使用 Read 工具渲染图片后自行推测/描述图片内容。** Read 工具上传图片到 CDN 的功能仅限于为 MCP 提供临时 URL，不得基于渲染结果声称"看到了"图片并输出视觉描述——先验知识会导致严重的幻觉问题。
 
 #### 2.2 反推 prompt
 
@@ -110,7 +140,8 @@ RESULT=$(python3 .claude/skills/collect-image-2-prompt/scripts/dedup-check.py "<
 - [ ] 图片已从推文中提取（`pbs.twimg.com/media` URL）
 - [ ] 前置 URL 去重检查已执行（命中则终止）
 - [ ] 推文文本已提取（博主心得作为辅助线索）
-- [ ] 图片通过 bb-browser fetch → base64 → MCP 临时 URL 路径分析
+- [ ] 图片分析：优先 MCP → 降级 codex CLI → 均失败则报错跳过
+- [ ] 未使用 Read 工具自行推测图片内容
 - [ ] 逐张处理：每张图分析完立即反推、去重、写入，再处理下一张
 - [ ] 反推的 prompt 结构完整，可复现
 - [ ] 去重检查已通过
